@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+    <script>
+    // root 王岳归来不看山，要看就看岳不群的华山
+    //文字设置为红色
+    //1.会查找两次root,
+    //document.getElementById('root').innerText = ' 王岳归来不看山，要看就看岳不群的华山';
+    //document.getElementById('root').style.color = 'red';
+    //内存（定义变量），性能（网页查询性能，id是索引）
+    const el = document.getElementById('root');
+    //2.如何合并以下两句代码
+    // el.innerText = ' 王岳归来不看山，要看就看岳不群的华山';
+    // el.style.color = 'red';
+    // .innerText text();
+    // .style .css();
+    // el
+    //链式调用之前，它的类型应该是DOM节点。封装函数，具有返回值
+    // .innerText = ''
+    // .style.color = '';
+
+    //$ 函数名
+    function $(cssSelector) {
+        return document.querySelector(cssSelector);
+    }
+    // 1.text函数有自己的需要，设置innerText
+    // 2.支持链式，return 结点
+    //3.
+    // function text(str,el){   //为结点设置文本
+    //     el.innerText = str;
+    //     return el;
+    // }
+
+    // function css(type,val,el){
+    //     el.style[type] = val;
+    //     return el;
+    // }
+
+
+    // //函数嵌套
+    // css('color','red',text('王岳归来不看山，要看就看岳不群的华山',$('#root')));
+    // .innerText = '王岳归来不看山，要看就看岳不群的华山 '
+    // .style.color = 'red';
+
+    //4.函数组合，...
+    //原型prototype,原型链上定义的方法可以找到，
+    //原型上的方法返回实例，就可以一直点下去。
+
+    // 1.构建一个类_$
+    // 2.prototype,添加text,css方法，每个方法都返回_$实例--$
+    // 3.链式调用
+    //源码分析课程，手写JQUERY
+    $('#root')
+     .text('王岳归来不看山')
+     .css('color',red)
+    </script>
+</body>
+</html>
