@@ -1,0 +1,51 @@
+Page({
+  data:{
+    entities:[
+      {
+        imageUrl:'../../assets/images/landscape.png',
+        title:'A',
+        description:'aa'
+      },
+      {
+        imageUrl:'../../assets/images/2.jpg',
+        title:'B',
+        description:'bb'
+      },
+      {
+        imageUrl:'../../assets/images/19.jpg',
+        title:'C',
+        description:'cc'
+      },
+      {
+        imageUrl:'../../assets/images/10.jpg',
+        title:'D',
+        description:'dd'
+      },
+      {
+        imageUrl:'../../assets/images/14.jpg',
+        title:'E',
+        description:'ee'
+      },
+      {
+        imageUrl:'../../assets/images/15.jpg',
+        title:'F',
+        description:'ff'
+      },
+      {
+        imageUrl:'../../assets/images/8.jpg',
+        title:'G',
+        description:'gg'
+      }
+    ] 
+  },
+  onLoad() {
+    console.log('onLoad');
+  },
+  onReachBottom() {   //生命周期函数
+    console.log('触底了');
+    const data = [...this.data.entities,...this.data.entities];
+    this.setData({
+      entities:data
+    })
+  }
+})
