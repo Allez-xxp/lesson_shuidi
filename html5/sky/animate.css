@@ -1,0 +1,14 @@
+
+#skyscrapper{
+            border: 1px solid blue;
+            height: 248px;
+            width: 598px;
+            overflow: hidden;
+        }
+.box{
+            background-color: greenyellow;
+            width: 50px;
+            height: 50px;
+            margin: 10px auto;
+        }
+
