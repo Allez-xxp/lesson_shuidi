@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>爬取top250电影</title>
+</head>
+<body>
+<div class="wrapper">
+ <div class="content">
+<!-- 网页布局，类似于平面报纸 -->
+  <div class="grid-16-8">
+   <div class="article">
+   <!-- 列表
+    序号，排序；有序列表，语义化标签-->
+   <ol class="grid_view">
+    <li>
+        <div class="item">
+            <!-- 左边是pic，右边是info -->
+            <div class="pic">
+                 <em>1</em> <!--em表示强调,效果加粗 -->
+                 <a href="movie.douban.com/subject/123">
+                    <!-- 有助于一些使用助听器访问网站的人 -->
+                    <img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.webp"
+                     alt="肖申克的救赎">
+                </a>
+            </div>
+            <div class="info">
+
+                <div class="hd">
+                    <a href="">
+                        <span class="title">肖申克的救赎</span>
+                        <span class="title">&nbsp;/&nbsp;
+                            The Shawshank Redemption</span>
+                        <span class="other">&nbsp;/&nbsp;月黑风高</span>
+                    </a>
+                    <span class="playable">【可播放】</span>
+                </div>
+                <div class="bd">
+                    <p>
+                        导演: 弗兰克·德拉邦特 Frank Darabont  
+                        主演: 蒂姆·罗宾斯 Tim Robbins /...
+                        <br>
+                        1994 / 美国 / 犯罪 剧情
+                    </p>
+                    <div class="star">
+                        <span class="rating5-t"></span>
+                        <span class="rating_num">9.7</span>
+                        <span>1714440评价</span>
+                    </div>
+                    <p class="quote">
+                        <span class="inq">希望让人自由</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </li>
+   </ol>
+    <!-- 分页，功能 1.url的功能设置-->
+    <div class="pagination">
+    <span class="prev">&lt;前一页</span>
+    <span class="thispage" >1</span> <!--表示当前页；&lt表示小于号 -->
+     <a href="?start=25">2</a>
+     <a href="?start=50">3</a>
+     <a href="?start=75">4</a>
+     <a href="?start=100">5</a>
+     <a href="?start=125">6</a>
+     <a href="?start=150">7</a>
+     <a href="?start=175">8</a>
+     <a href="?start=200">9</a>
+     <a href="?start=225">10</a>
+     <span class="next">
+        <a href="?start=25">后一页</a> 
+    </span>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+</body>
+</html>
