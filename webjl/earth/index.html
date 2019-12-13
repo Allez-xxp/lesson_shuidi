@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>three.js canvas -geometry - earth</title>
+    <!-- cdn:内容分发网络。从cdn引入js文件，更快 
+    -->
+    <script src="https://cdn.bootcss.com/three.js/r83/three.min.js">
+    </script>
+</head>
+<body>
+<!-- 画布 -->
+  <canvas id="webglcanvas">
+      <script>
+      var canvas, //3d,使用canvas渲染webgl
+      camera,     //相机功能，
+      scene,      //场景
+      renderer;   //渲染器
+      var mouseX = mouseY = 0;  //记录鼠标变化
+
+    
+      var windowHalfx = window.innerWidth / 2;
+      var windowHalfy = window.innerHeight / 2;
+      init();
+      animate(); //显示
+    //   导演，拿着相机，找到演员，摆好pose，动起来
+    //   canvas相当于录影机，播放出来
+      function init() {
+          canvas = document.getElementById('webglcanvas');  //3d的容器
+          camera = new THREE.PerspectiveCamera(60,
+          window.innerWidth/innerHeight,1,2000);
+          camera.position.z = 500;
+          
+          //创建场景
+          scene = new THREE.Scene();  
+          scene.background = new THREE.Color(0xffffff);
+          
+          //创建分组
+          group =new THREE.Group();
+          scene.add(group); //将创建的场景添加到小组中
+          
+          //TextureLoader用于加载图片；对背景进行贴图
+          var loader = new THREE.TextureLoader();
+          //表示图片已加载完成
+          loader.load('land_ocean_ice_cloud_2048.jpg',
+          function(texture){
+            var geometry = new THREE.SphereGeometry(200,20,20);
+            var material = new THREE.MeshBasicMaterial({
+                map:texture
+            });
+            
+            //建模
+            var mesh = new THREE.Mesh(geometry,material);
+            group.add(mesh);
+          })
+
+          renderer = new THREE.WebGLRenderer({
+              canvas:canvas,
+              antialias:true,
+              
+          })
+          renderer.setSize(window.innerWidth,window.innerHeight);
+
+          //监听器，用于用户交互，与鼠标移动相关
+          document.addEventListener('mousemove',onDocumentMouseMove,false);
+          //监听器,用于窗口大小调整，使目标始终在正中心
+          window.addEventListener('resize',onWindowResize,false);
+         // renderer.render(scene,camera);
+      }
+      function animate() {
+          requestAnimationFrame(animate); //请求关键帧，递归调用
+          render();
+      }
+      function render() {
+          camera.position.x += (mouseX-camera.position.x)*0.05;
+          camera.position.y += (-mouseY-camera.position.y)*0.05;
+        //   camera.position.x +=
+        //   camera.position.y +=
+          camera.lookAt(scene.position);
+          group.rotation.y -=0.005;  //旋转
+          renderer.render(scene,camera);
+      }
+
+      //与鼠标移动相关,用于用户交互
+      function onDocumentMouseMove(event){
+        //   console.log(event.clientX,event.clientY);
+        mouseX = event.clientX-windowHalfx;
+        mouseY = event.clientY-windowHalfy;
+      }
+
+      //用于窗口大小调整，使目标始终在正中心
+      function onWindowResize() {
+          windowHalfx= window.innerWidth / 2;
+          windowHalfy= window.innerHeight / 2;
+          camera.aspect = window.innerWidth/window.innerHeight;
+          renderer.setSize=(window.innerWidth,window.innerHeight);
+      }
+      </script>
+  </canvas>  
+</body>
+</html>
