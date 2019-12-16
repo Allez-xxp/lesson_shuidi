@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <!-- <div>这个家伙很懒，什么都没有留下</div>
+    web2.0: 双击一下；将文字移动，瞬间变成输入框，立即输入;回车。
+    - 事件
+    - 状态的改变,DOM编程
+    - 本地存储
+    - 将这些整合起来，使用面向对象来封装处理
+    -->
+    <div id="profile">
+        
+    </div>
+    <script>
+    //js设计模式
+    //在线编辑:EditInPlace;提高用户体验
+    //类（首字母大写）：封装内部的实现细节
+    function EditInPlace(id,parent,value) {
+        this.id = id;
+        this.value = value || 'default value';
+        this.parentElement = document.getElementById(parent);
+        this.createElements()  //把节点显示到页面上
+        this.attachEvents();  //增加一个事件
+    }
+    EditInPlace.prototype.attachEvents = function()
+    {
+        // this ->指向实例过后的对象
+        // dom节点都可以添加监听器 
+        //考点：cancelButton和saveButton代码重复；dry规则
+        //取消，还原上一层
+        this.cancelButton.addEventListener('click',()=>
+        {
+            // this.staticElement.style.display = 'inline';
+            // this.fieldElement.style.display = 'none';
+            // this.saveButton.style.display = 'none';
+            // this.cancelButton.style.display = 'none';
+            this.convertToText();
+        })
+        // 1.将输入框转换为文字；2.保留输入文字
+        this.saveButton.addEventListener('click',() => 
+        {
+            var text = this.fieldElement.value;
+            this.value = text;
+            //本地存储
+            window.localStorage.setItem('profile',text);
+            this.staticElement.innerText = text;
+            // this.staticElement.style.display = 'inline';
+            // this.fieldElement.style.display = 'none';
+            // this.saveButton.style.display = 'none';
+            // this.cancelButton.style.display = 'none';
+            this.convertToText();
+        })
+        // var that = this;  ---不用that，而使用箭头函数
+        this.staticElement.addEventListener('click',()=>{
+            // console.log('this');
+            //将其抽象出来,封装成函数
+            // this.staticElement.style.display = 'none';
+            // this.fieldElement.style.display = 'inline';
+            // this.saveButton.style.display = 'inline';
+            // this.cancelButton.style.display = 'inline';
+            this.convertToEdit();
+        },false);
+    }
+    EditInPlace.prototype.convertToEdit = function() {
+        this.staticElement.style.display = 'none';
+        this.fieldElement.style.display = 'inline';
+        this.saveButton.style.display = 'inline';
+        this.cancelButton.style.display = 'inline';
+    }
+    EditInPlace.prototype.convertToText = function() {
+        this.staticElement.style.display = 'inline';
+        this.fieldElement.style.display = 'none';
+        this.saveButton.style.display = 'none';
+        this.cancelButton.style.display = 'none';
+    }
+    //即是类，又是构造函数
+    EditInPlace.prototype.createElements = function()
+    {
+        console.log('显示文本');
+        this.containerElement = document.createElement('div');
+        this.staticElement = document.createElement('span');
+        this.staticElement.innerText = this.value;
+        this.fieldElement = document.createElement('input');
+        this.fieldElement.type = 'text';
+        this.fieldElement.value = this.value;
+        this.fieldElement.style.display = 'none';
+        this.containerElement.appendChild(this.fieldElement);
+
+        //添加一个按钮，保存数据
+        this.saveButton = document.createElement('input');
+        this.saveButton.type = 'button';
+        this.saveButton.value = 'save';
+        this.saveButton.style.display = 'none';
+
+        //添加一个按钮，取消操作，返回上一层
+        this.cancelButton = document.createElement('input');
+        this.cancelButton.type = 'button';
+        this.cancelButton.value = 'cancel';
+        this.cancelButton.style.display = 'none';
+        
+        //加载
+        this.containerElement.appendChild(this.saveButton);
+        this.containerElement.appendChild(this.cancelButton);
+        this.containerElement.appendChild(this.staticElement);
+        this.parentElement.appendChild(this.containerElement);
+    }
+
+    //es6写法,设计模式类
+    // function EditInPlace(id,parent,value) {}
+    // EditInPlace.prototype = {
+    //     createElement() {},  //创建要显示的节点
+    //     attachEvents() {},   //管理是由事件
+    //     //方法
+    //     convertToText() {},
+    //     convertToEdit() {},
+    //     //添加
+    //     save() {},
+    //     //利于代码阅读
+    //     setValue(val){
+    //         this.value = value;
+    //         this.staticElement.innerText = value;
+    //         localStorage.setItem('profile',value);
+    //     },
+    //     cancel() {},
+    // }
+    
+    window.onload = function() {
+        var profile = localStorage.getItem('profile');
+        var profileEditor = new EditInPlace('titleClassical','profile',
+    profile);
+    }
+    
+    </script>
+</body>
+</html>
