@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!-- 如何拼接两个json文件内容 -->
+    <script>
+       let author = [],
+       posts = [];
+
+    //    const postsPromise = new Promise((resolve,reject) =>{
+    //     fetch('/posts.json')
+    //     .then(data =>data.json)
+    //     .then(data =>{
+    //         resolve(data);
+    //     })
+    //    })
+    //    const authorPromise = new Promise((resolve,reject) =>{
+    //     fetch('/author.json')
+    //     .then(data =>data.json)
+    //     .then(data =>{
+    //         resolve(data);
+    //    })
+    // })
+    const postsPromise =  fetch('/posts.json');
+    const authorPromise = fetch('/author.json');
+    Promise
+    .all([postsPromise,authorPromise])
+    .then(responses =>{
+        // responses请求响应函数;responses.map将返回的responses结果用数组输出
+        return Promise.all(responses.map(res =>res.json()))
+    })
+    .then(responses =>{
+        console.log(responses);
+    })
+    
+    //    fetch('/posts.json')    //发出请求
+    //    .then(data => data.json())  //将二进制转换为json文件格式
+    //    .then(data => {
+    //     //console.log(data))
+    //     posts = data;  //得到posts
+
+    //     // Promise内部封装一个函数fetch，具有resolve和reject能力
+    //     return new Promise((resolve,reject) =>{
+    //         fetch('/author.json')
+    //         .then(data =>data.json)
+    //         .then(data =>{
+    //             author = data;
+    //             resolve(author)   //调用resolve接口，结束异步
+    //         });
+    //     });
+    //    }) 
+    //    .then(data =>{
+    //        console.log([author,posts]);
+    //    }) 
+    // //    fetch('/author.json')
+    // //    .then(data => data.json())  
+    // //    .then(data => {(
+    // //        console.log(data))
+    // //    })  
+    </script>
+</body>
+</html>
