@@ -1,0 +1,17 @@
+bg-image($url)  //定义函数:bg-image
+    background-image url($url + "@2x.png")
+    @media(-webkit-min-device-pixel-ratio:3),(min-device-pixel-ratio:3)
+        background-image url($url + "@3x.png")
+
+border-1px($color)   //根据颜色传过来
+    position relative
+    &:after  //增加伪元素
+        display block
+        position absolute
+        left 0
+        bottom 0
+        width 100%
+        border-top 1px solid $color
+        transform scaleY(0.5)  //在垂直方向压低0.5像素，即0.5像素
+        transform-origin 0 100%
+        content:''
