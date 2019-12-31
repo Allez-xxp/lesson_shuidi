@@ -14,7 +14,7 @@
       </div>
     </div>
     <router-view></router-view>
-    <v-footer></v-footer>
+    <!-- <v-footer></v-footer> -->
   </div>
 </template>
 <script>
@@ -54,9 +54,11 @@ export default {
 <style lang="stylus">
 @import "./common/stylus/mixin.styl"
 
+//全局共享样式
 *
   padding 0
   margin 0
+
 .tab
   display flex
   width 100%

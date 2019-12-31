@@ -8,22 +8,27 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    //默认路径
+    component: () => import(/* webpackChunkName: "about" */ 
+    '../views/Goods.vue')  
   },
   {
     path: '/goods',
     name: 'Goods',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Goods.vue')
+    component: () => import(/* webpackChunkName: "about" */ 
+    '../views/Goods.vue')
   },
   {
     path: '/ratings',
     name: 'Ratings',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Ratings.vue')
+    component: () => import(/* webpackChunkName: "about" */ 
+    '../views/Ratings.vue')
   },
   {
     path: '/seller',
     name: 'Seller',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Seller.vue')
+    component: () => import(/* webpackChunkName: "about" */ 
+    '../views/Seller.vue')
   },
 ]
 
