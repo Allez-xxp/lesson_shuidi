@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display : none
+        }
+    </style>
+    <!-- MVVM,响应式，数据驱动界面 -->
+    <script src="http://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <!-- 负责样式，布局 -->
+    <link  href="https://cdn.bootcss.com/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 
+    vue，目前最新版是3.0；typescript来编写。
+    引用式 -->
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Hello Vue.js!</h1>
+        </div>
+        <div id="app">
+            <!-- {title} -->
+            <!-- MVVM的区域 -->
+            <table class="table table-hover" v-cloak>
+                <thead>
+                    <tr>
+                        <th class="text-right" @click="sortBy('id')">序号</th>
+                        <th class="text-right" @click="sortBy('name')">姓名</th>
+                        <th class="text-right" @click="sortBy('author')">作者</th>
+                        <th class="text-right" @click="sortBy('price')">价格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="book in books" :key="book.id">
+                        <td class="text-right">{{book.id}}</td>
+                        <td class="text-right">{{book.name}}</td>
+                        <td class="text-right">{{book.author}}</td>
+                        <td class="text-right">{{book.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 表单，请你使用json data book -->
+            <div id="add-book">
+                <legend>添加书籍</legend>
+                <div class="form-group">
+                    <label >书名</label>
+                    <!--legend：HTML标签，表单（解释作用） 
+                        form-group：快速生成
+                         v-model:双向绑定 -->
+                    <input type="text" class="form-control" v-model="book.name">
+
+                </div>
+                <div class="form-group">
+                    <label >作者</label>
+                    <input type="text" class="form-control" v-model="book.author">
+                </div>
+                <div class="form-group">
+                    <label >价格</label>
+                    <input type="number" class="form-control" v-model="book.price">
+                </div>
+                <button class="btn btn-primary btn-block" @click="addBook()">添加</button>
+            </div>
+        </div>
+        <script>
+            // vue用于做单页应用的；一个类，可以被实例化
+            // 启动vue，只能做一次；接管vue，complie
+            var app = new Vue({
+                el:'#app',
+                data() {
+                    return {
+                        books:[{
+                            id:1,
+                            author:'曹雪芹',
+                            name:'红楼梦',
+                            price:32.0
+                        },
+                        {
+                            id:2,
+                            author:'施耐庵',
+                            name:'水浒传',
+                            price:35.0
+                        },
+                        {
+                            id:3,
+                            author:'罗贯中',
+                            name:'三国演义',
+                            price:30.0
+                        },
+                        {
+                            id:4,
+                            author:'吴承恩',
+                            name:'西游记',
+                            price:29.0
+                        }],
+                        book:{  //为了表单服务
+                            id:0,
+                            name:'',
+                            author:'',
+                            price:''
+                        },
+                        sortparam:{
+
+                        }
+                    }
+                    // title:'标题'
+                },
+                methods: {
+                    addBook() {
+                        // 维护数据， 页面会自动更新
+                        // 对象，引用类型
+                        this.book.id=this.books.length + 1;
+                        this.books.push(this.book);
+                        this.book = '';
+                    
+                    },
+                    sortBy (sortparam) {
+                    //支持所有type排序
+                    // mvvm排序，this.books排序
+                    //add.sort,排序
+                        this.sortparam =sortparam;
+                        this.books.sort(function(a,b) {
+                            let aVal = a[sortparam];
+                            let bVal = a[sortparam];
+                            if(typeof aVal == 'number' && typeof bVal == 'number') {
+                                return aVal - bVal;
+                            } else {
+                                return aVal.charCodeAt(0) - bVal.charCodeAt(0);
+                            }
+                        })
+                    }
+                }
+            })
+        </script>
+    </div>
+</body>
+</html>
