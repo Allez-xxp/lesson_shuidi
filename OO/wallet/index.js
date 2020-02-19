@@ -57,3 +57,4 @@ console.log(jayWallet.id);
 jayWallet.increaseBalance(20);
 jayWallet.decreaseBalance(10);
 console.log(jayWallet.getBalance());
+ 

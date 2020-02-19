@@ -12,4 +12,10 @@
 
 - 设计一下balance（金额）的修改
  进钱，出钱
+ js 使用——attribute 这种做法是是一种约定，private
+ 一般情况下，可以这么写。
+ getID,increateBalance(),内部修改这些属性private。
+
+- 真正的私有，到底怎么做？
+ 闭包创建私有类，（红宝书里的内容） 
  
