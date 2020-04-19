@@ -7,8 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "core-js": "^3.6.4",
+    "express": "^4.17.1",
     "moment": "^2.24.0",
+    "mongoose": "^5.9.9",
     "vue": "^2.6.11"
   },
   "devDependencies": {

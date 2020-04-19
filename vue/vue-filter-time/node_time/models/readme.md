@@ -142,6 +142,13 @@ mongod --dbpath "f:MongoDB\data\db"
     ... }
     ... ])
     
+- todo 活动activity
+  1. 开始日期
+  2. 结束日期
+
+  - config 配置
+    1. port 端口
+    2. 数据库连接
 
 
 
