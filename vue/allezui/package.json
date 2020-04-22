@@ -1,0 +1,36 @@
+{
+  "name": "allezui",
+  "version": "0.1.0",
+  
+  "description":"the first ui writed by Allez-xxp",
+  "main": "lib/allezui.umd.min.js",
+  "keywords":[
+    "component",
+    "components",
+    "vue",
+    "vue-component"
+  ],
+  "homepage":"https://github.com/Allez-xxp",
+  "license":"MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lib": "vue-cli-service build --target lib --name allezui --dest lib packages/index.js"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.3.0",
+    "@vue/cli-plugin-router": "^4.3.0",
+    "@vue/cli-service": "^4.3.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
