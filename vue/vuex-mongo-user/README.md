@@ -66,4 +66,79 @@ vue.config.js 解决端口不一致问题
         - 写操作 mapActions('queryTag',evt)
         委托给queryTag去做，并传evt参数，得到tag 去改变数据
     - component App.vue
+
+- partThree mongodb -优化查询性能：
+    - 分析查询：执行的状态分析
+    db.users.find({tags: 'coding'}).explain("executionStats");
+        "tags" : {
+           "$eq" : "coding"  数组中只要有一项相等就可以
+        }
+        "winningPlan" : {
+                    "stage" : "COLLSCAN",   //表示collectionScan检索整个集合
+                    "filter" : {
+                            "tags" : {
+                                    "$eq" : "coding"
+                            }
+                    },
+                    "direction" : "forward"
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 2,
+                "executionTimeMillis" : 0,
+                "totalKeysExamined" : 0, //当前没有利用上任何索引
+                "totalDocsExamined" : 4, //总共查询了4条
+        },
+    - 解释：查询的效率，不仅只是把Users查出来，还要能按喜好，把用户查出来，，如果这个变成了主要查询，那就要考虑加索引。添加explain看看它的执行效率高不高。
+    检索了整个表，查询就会很慢，为主要查询的，建一个索引
+    - 为tags集合建一个索引：
+        - db.users.ensureIndex({"tags":1) 添加一个索引，为1,做一个升序的索引
+        - 再次执行db.users.find({tags: 'coding'}).explain("executionStats");
+        "winningPlan" : {
+                    "stage" : "FETCH",
+                    "inputStage" : {
+                            "stage" : "IXSCAN", //变成了这个
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 2,
+                "executionTimeMillis" : 2, 
+                "totalKeysExamined" : 2, //用了索引了
+                "totalDocsExamined" : 2, //现在只会检查两个文档
+        },
+    - 查看所有的索引   
+    db.users.getIndexSpecs();
+    [
+        {
+            "v" : 2,
+            "key" : {
+                        "_id" : 1  //默认一定会有一个_id的自增索引
+            },
+            "name" : "_id_",
+            "ns" : "test.users"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "tags" : 1 //这个是我们建的 ，升序
+                },
+                "name" : "tags_1", //名字，删除的时候用
+                "ns" : "test.users"
+        }
+    ]
+    - 删除索引
+    db.users.dropIndex("tags_1");
+    { "nIndexesWas" : 2, "ok" : 1 }
+
+    - 落实到node中
+    vuex-mongodb-user的models中（设计模型的时候）
+    "tags": [
+        { type: String,index: true}
+    ],
+
+    - PS D:\LESSION_SHUIDI\vue\vuex-mongo-user\node-user> nodemon app.js运行node项目后
+    只要一保存，就会加上索引
+
  
+     
+   
