@@ -2,6 +2,14 @@
   <div id="app">
     <!-- <div v-for="(user,index) in users" :key="index"> {{user.name}}</div> -->
     <!-- <div v-for="(user, index) in $store.state.users" :key="index">{{user.name}}</div> -->
+    <!-- change事件放在了...mapAction中，而不是methods中 -->
+    <select @change="queryTag">
+      <option value="">请选择</option>
+      <option value="poem">诗歌</option>
+      <option value="coding">编程</option>
+      <option value="music">音乐</option>
+    </select>
+    
     <div v-for="(user, index) in getUsers" :key="index">
       {{user.id}} {{user.name}}
     </div>
@@ -88,7 +96,22 @@ export default {
     // HelloWorld
   },
   methods: {  //针对于vuex的actions
-    ...mapActions(['fetchUsers'])
+    ...mapActions(['fetchUsers','queryTag']),
+    
+    // queryTag(evt) { 
+    //   // 因为这里本来就要发送一个mapAction请求
+    //   // 他只是要拿到一个
+    //   tag = evt.target.value;
+    //   console.log(tag, 'component');
+    // },
+
+    // 根据tag把相应的用户找出来
+    // 1. tag change value 
+    // 2. users computed mapGetters 
+    //   actions  api   发出新的请求  vuex store 
+    // 3. api/  
+    // 4. node router  /tag/:tag再回流回到api
+    // queryTag() {}
   },
   mounted() {  //使用生命周期取数据
     // ajax请求（二层）；TCP（三次握手）更加安全（相互确认身份）

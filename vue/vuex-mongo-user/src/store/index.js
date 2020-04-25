@@ -74,17 +74,26 @@ export default new Vuex.Store({
           context.commit('setUsers', users)   // setUsers由mutations定义
         })
     },
-   
+    queryTag(context,evt) { //evt会在change发生时拿到change对象
+      const tag = evt.target.value;
+      console.log(evt);
+      // console.log(tag);
+      api  //在api中提供这个
+        .fetchUsersByTag(tag, (users)=>{
+          context.commit('setUsers',users) //修改
+        })
+    }
   },
   getters: { // 相当于state的computed函数；不需要计算
     //提供计算的函数，返回值是getters向页面组件提供的数据
     getUsers(state) {  //vuex的api会给getters一个state，读操作
       // return state.users
       // 做一个变形
-      return state.users.map((user, index) => {
-        user.id = user.address.pincode + index //邮箱地址+邮政编码+index
-        return user //map之后要return一个新user
-      })
+      // return state.users.map((user, index) => {
+      //   user.id = user.address.pincode + index //邮箱地址+邮政编码+index
+      //   return user //map之后要return一个新user
+      // })
+      return state.users
     }
     },
   modules: {

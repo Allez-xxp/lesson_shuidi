@@ -1,5 +1,5 @@
-# vuex 读·写操作
-- partOne
+# vuex mongodb 索引
+- partOne 读·写操作
 1. 数据流通（了解意义）
     - 数据绑定(vue) -》数据流(vuex)
     - vuex 作用相当于三峡
@@ -27,4 +27,43 @@
     - computed  中央数据来源  ...mapGetters([''])  提前声明
     - methods  针对于vuex的actions  ...mapActions([''])
     - mounted  使用生命周期取数据
+
+- partTwo 数据如何跨越流通
+1. 数据库操作
+    - 先插入数据 db.collection.insert({""})
+    - 查找数据 db.collection.find({})
+    - 清空表数据 db.collection.drop()
+2. 跨域配置 
+vue.config.js 解决端口不一致问题
+3. node-user目录(node代码，跟数据库进行通信)下各目录作用
+    - db  db.js  相关操作：
+        - mongoose.connect  连接数据库
+        - db.once('open',()=>{})  执行成功的回调函数
+        - db.on('error',function(error){mongoose.disconnect();})  执行失败的回调函数
+    - models user.js 模型文件 相关操作：
+        - 声明引入mongoose
+        - 引用mongoose.Schema()
+        - 定义一个模型 const userSchema = new Schema({})
+        - 输出  module.exports = User;
+    - routes index.js 路由文件，连接数据库和模型文件
+        - 引入express，数据库文件db.js，模型文件user.js
+        - 引用express.Router()
+        - user.get('/', async(req, res)=>{}) 取出数据库数据
+    - app.js 入口文件
+        - 引入express，数据库文件db.js，路由文件index.js
+        - 监听3000端口 app.listen('3000', ()=>{})
+4. 数据流通的过程
+    - 源头：node 
+        - 通过 User.find() 全部查询，得到:3000/users/ 
+        - 通过 User.find({tags: tag} 查询条件，得到对应的:3000/users/tag/:tag
+        - 解决代理，跨域问题proxy vue.config.js；前后端通信搞定
+    - 来到API层 通信
+        - fetchUsers
+        - fetchUsersByTag
+    - vuex 大型项目必备，接管数据
+        - 读数据 this.$store.state.users
+        - 触发actions this.$store.dispatch('fetchUser')
+        - 写操作 mapActions('queryTag',evt)
+        委托给queryTag去做，并传evt参数，得到tag 去改变数据
+    - component App.vue
  
