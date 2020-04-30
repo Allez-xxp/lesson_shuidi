@@ -1,0 +1,16 @@
+{
+  "name": "mongo-nearby",
+  "version": "1.0.0",
+  "description": "- 目标：全栈的开源项目/商业项目/创业项目\r 1. 仿应用（美团）\r     - 简历里介绍项目",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10"
+  }
+}
