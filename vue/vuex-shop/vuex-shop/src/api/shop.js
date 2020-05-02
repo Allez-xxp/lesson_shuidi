@@ -26,7 +26,8 @@ export default {
     },
     buyProducts(product, cb, errorCb){ //cb是买完之后回调一下给你
         setTimeout(() => {
-            (Math.random() > 0.3)?cb() : errorCb()
+            // 随机，成功率50%；大于0.5调用cb(), 小于0.5调用errorCb()
+            (Math.random() > 0.5)?cb() : errorCb()
         }, 1000);
     }
 }

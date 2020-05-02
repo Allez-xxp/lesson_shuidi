@@ -9,8 +9,9 @@
         :key="product.id">     
         {{product.title}} - {{product.price}} - {{product.inventory}}       
         <br>
+        <!-- :disabled = "!product.inventory": 表示库存为零时，按钮不可点击-->
         <button 
-        :disabled = "!product.inventory"
+        :disabled = "!product.inventory"  
         @click="addProductToCart(product)">
             添加购物车
         </button>  
@@ -32,7 +33,7 @@ export default {
     
     created() { //比mounted 更早发生，实例化之后就做，不等挂载html
     //数据的请求只在actions中 ，不会再组件中的，在vuex中
-    // dispatch派发方法，只会找到根节点上的products
+    // dispatch派发方法，只会找到根节点上的products7
     //这里利用到了命名空间，所以getAllProducts方法可以放在模块的文件中，不用放在store.js
         this.$store.dispatch('products/getAllProducts')
     },

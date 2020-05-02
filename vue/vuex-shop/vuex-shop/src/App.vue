@@ -32,6 +32,9 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+[disabled] {
+  cursor: not-allowed;  /*鼠标禁用，红圈表示*/ 
+}
 </style>
 
 <script>
