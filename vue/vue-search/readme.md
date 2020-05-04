@@ -56,3 +56,4 @@
         - 重新定义一个模型 
         const Post = mongoose.model('Post',postSchema);
         - 输出  module.exports = Post;
+
