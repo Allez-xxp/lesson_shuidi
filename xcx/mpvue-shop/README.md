@@ -1,0 +1,11 @@
+# 小程序页面的构建 mpvue
+- app.json 进行小程序的修改
+    - window 主页面
+    - tabBar 底栏
+        - list[{}] 列表形式显示选项
+            - pagePath 页面路径
+            - iconPath 未选择的图片
+            - selectedIconPath 选择是的图片
+            - text 页面描述 
+- pages 页面具体操作；引用pages里的文件需提前声明
+- static 提供静态资源（图片）

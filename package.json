@@ -1,0 +1,23 @@
+{
+  "name": "lesson_shuidi",
+  "version": "1.0.0",
+  "description": "全栈学习总结",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Allez-xxp/lesson_shuidi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Allez-xxp/lesson_shuidi/issues"
+  },
+  "homepage": "https://github.com/Allez-xxp/lesson_shuidi#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
