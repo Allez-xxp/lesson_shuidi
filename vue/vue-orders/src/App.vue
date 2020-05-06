@@ -89,30 +89,30 @@ export default {
       limit:20, //每页显示20条
       listLoading:true, //加载数据中
       list: [
-        {
-          "_id": "121212",
-          "name": "韭黄",
-          "orderDate": new Date(),
-          "status": "completed",
-          shippingFee: "0.5",
-          total: "111"
-        },
-        {
-          "_id": "121212",
-          "name": "韭黄",
-          "orderDate": new Date(),
-          "status": "canceled",
-          shippingFee: "0.6",
-          total: "111"
-        },
-        {
-          "_id": "121212",
-          "name": "韭黄",
-          "orderDate": new Date(),
-          "status": "created",
-          shippingFee: "0.7",
-          total: "111"
-        }
+        // {
+        //   "_id": "121212",
+        //   "name": "韭黄",
+        //   "orderDate": new Date(),
+        //   "status": "completed",
+        //   shippingFee: "0.5",
+        //   total: "111"
+        // },
+        // {
+        //   "_id": "121212",
+        //   "name": "韭黄",
+        //   "orderDate": new Date(),
+        //   "status": "canceled",
+        //   shippingFee: "0.6",
+        //   total: "111"
+        // },
+        // {
+        //   "_id": "121212",
+        //   "name": "韭黄",
+        //   "orderDate": new Date(),
+        //   "status": "created",
+        //   shippingFee: "0.7",
+        //   total: "111"
+        // }
       ]
     }
   },
@@ -120,11 +120,11 @@ export default {
     // setTimeout(()=>{
     //   this.listLoading = false
     // },1000)
-    Axios.post('/api/orders',{
-      params: {
-        // 分页参数        
-      }
-    })
+    // Axios.post('/api/orders',{
+    //   params: {
+    //     // 分页参数        
+    //   }
+    // })
     //不能接受动态路由吗？ /api/orders/:page/:limit
     // Axios.get('/api/orders',{
     //   params: {
@@ -133,8 +133,8 @@ export default {
     //     limit: this.limit       
     //   }
     // })
-    Axios.post('/api/orders',{
-      // Axios.get('/api/orders',{
+    // Axios.post('/api/orders',{
+      Axios.get('/api/orders',{
       params: {
         // 分页参数 
         page: this.page,
@@ -143,8 +143,8 @@ export default {
     })
     .then(res => {
       console.log(res);
-      this.list = res.data.orders
-      // this.list = res.data.result
+      // this.list = res.data.orders
+      this.list = res.data.result
       setTimeout(()=>{
         this.listLoading = false
       },1000)

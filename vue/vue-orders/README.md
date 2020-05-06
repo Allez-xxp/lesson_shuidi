@@ -28,3 +28,17 @@ table一页展示20条数据，分页 多少页？
     在main.js中引入，在项目中添加mock文件
     - 引入axios yarn add axios http请求
     改了main.js内容，就要重启项目
+    
+# 数据库操作
+- 导入文件：
+mongorestore -h 127.0.0.1:27017 D:\lvmeng\dump
+前端 等后端接口时，运用mock模拟数据
+mock 本地数据库
+开发业务mock
+
+- 真实的后端数据：node/node-orders
+将mock的数据变成与数据库相匹配的
+chrome里的插件jsonview
+// import Mock from '@/mock'  //拿到真数据 mock就能注销了
+但是还要加一个vue.config.js解决跨域问题
+Axios中可以改回get了
