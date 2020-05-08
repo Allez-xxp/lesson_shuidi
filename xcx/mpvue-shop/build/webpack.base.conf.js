@@ -93,6 +93,11 @@ let baseWebpackConfig = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[ext]')
         }
+      },
+      // less的匹配规则
+      { 
+        test: /\.less$/, 
+        loader: "style-loader!css-loader!less-loader",
       }
     ]
   },

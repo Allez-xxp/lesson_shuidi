@@ -1,0 +1,52 @@
+.index{
+    width: 100%;
+    overflow: hidden; //超出则隐藏
+    position: relative;
+    // less样式采用嵌套方式
+    .search{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 25rpx 0 10rpx;
+        position: fixed;//相对于屏幕定位
+        top: 0;
+        z-index: 99;//可用于将在一个元素放置于另一元素之后。
+        height: 80rpx;
+        display: flex;//弹性布局
+        align-items: center;
+        background: #fff;
+        // 给同级的南昌(没有类名)加样式：
+        div:nth-child(1){
+            width: 115rpx;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;//不换行的样式
+            text-overflow: ellipsis;//超出则打点
+            font-size: 20rpx;
+            padding-right: 15rpx;
+        }
+        div:nth-child(2){
+            flex: 1;
+            position: relative;
+
+            input{
+                width: 100%;
+                height: 56rpx;
+                border-radius: 8rpx;//圆角4像素
+                background: #ededed;//灰白色
+                box-sizing: border-box;
+                padding-left: 40rpx;
+            }
+            // 放大镜的样式
+            .icon{
+                position: absolute;
+                top: 15rpx;
+                left: 10rpx;
+                background:url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;//在线图片icon fond
+                background-size: 100%;
+                width: 28rpx;
+                height: 28rpx;
+                margin-right: 10rpx;
+            }
+        }
+    }
+}
