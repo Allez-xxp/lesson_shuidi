@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// import amapFile from '../../utils/amap-wx.js'
 export default {
   data() {
     return {
@@ -40,7 +41,7 @@ export default {
               url:'/pages/mappage/main',
             });
             // _this.cityName='北京'
-            // _this.getCityName()
+            _this.getCityName()
           }
         },
         fail:(err)=>{
@@ -51,8 +52,8 @@ export default {
     },
     getCityName(){
       let _this=this
-      var myAmapFun = new amapFile.AMapWX({key:'947040d1a5c8185746d3cd82f38f24c3'});
-      myAmapFun.getRegeo({
+      var myAmapFun = new amapFile.AMapWX({key:''});
+      myAmapFun.getRegeo({   //高德地图中获取地址的方法：getRegeo()
         success:function(data){
           //成功回调
           console.log(data)
@@ -61,8 +62,8 @@ export default {
         fail:function(info){
           //失败回调
           console.log(info)
-          // _this.cityName='北京'
-          _this.update({cityName:'北京'})
+          _this.cityName='北京'
+          // _this.update({cityName:'北京'})
         }
       })
     }
