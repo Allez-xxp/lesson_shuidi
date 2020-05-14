@@ -6,16 +6,16 @@
       <div>
         <input type="text" placeholder="搜索商品" />
         <!-- 放大镜位置，放置图片，用position定位到input输入框中 -->
-        <span><input class="icon"></span>
+        <span class="icon"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import amapFile from '../../utils/amap-wx.js'
+import amapFile from '../../utils/amap-wx.js'
 export default {
-  data() {
+  data() {  //数据源
     return {
       cityName: "南昌",
     }
@@ -52,7 +52,7 @@ export default {
     },
     getCityName(){
       let _this=this
-      var myAmapFun = new amapFile.AMapWX({key:''});
+      var myAmapFun = new amapFile.AMapWX({key:'d92113c576d7ac584dcf72d12fb534e2'});
       myAmapFun.getRegeo({   //高德地图中获取地址的方法：getRegeo()
         success:function(data){
           //成功回调
