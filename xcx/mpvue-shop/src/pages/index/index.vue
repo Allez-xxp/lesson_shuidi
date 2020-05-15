@@ -41,7 +41,7 @@ export default {
               url:'/pages/mappage/main',
             });
             // _this.cityName='北京'
-            _this.getCityName()
+            // _this.getCityName()
           }
         },
         fail:(err)=>{
