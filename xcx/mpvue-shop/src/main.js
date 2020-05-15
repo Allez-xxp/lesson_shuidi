@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store/index'
+//把store挂载到全局，这样就能直接在代码中使用update方法了
+Vue.prototype.$store=store
 
 Vue.config.productionTip = false
 App.mpType = 'app'

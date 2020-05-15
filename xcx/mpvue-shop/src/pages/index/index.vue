@@ -2,7 +2,7 @@
   <div class="index">
     <!-- 头部搜索 -->
     <div class="search">
-      <div>{{cityName}}</div>
+      <div @click="toMappage">{{cityName}}</div>
       <div>
         <input type="text" placeholder="搜索商品" />
         <!-- 放大镜位置，放置图片，用position定位到input输入框中 -->
@@ -14,13 +14,18 @@
 
 <script>
 import amapFile from '../../utils/amap-wx.js'
+import {mapState, mapMutations} from 'vuex'
 export default {
   data() {  //数据源
     return {
-      cityName: "南昌",
+      // cityName: "南昌",
     }
   },
+  computed: {
+    ...mapState(['cityName'])
+  },
   methods: {
+    ...mapMutations(['update']),
     toMappage(){
       //授权否？通过wx.getSetting先查询一下用户是否授权"scoped.record"
       let _this=this
@@ -57,13 +62,13 @@ export default {
         success:function(data){
           //成功回调
           console.log(data)
-          // ......
+          
         },
         fail:function(info){
           //失败回调
           console.log(info)
-          _this.cityName='北京'
-          // _this.update({cityName:'北京'})
+          // _this.cityName='北京'
+          _this.update({cityName:'北京'})
         }
       })
     }
@@ -71,7 +76,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 // scoped样式私有化; 引入样式文件style.less
 @import "./style.less";
 </style>
