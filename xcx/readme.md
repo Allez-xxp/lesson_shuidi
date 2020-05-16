@@ -19,3 +19,10 @@
     - npm run dev 生成dist 小程序项目结构
 
 - mpvue-shop-node 用于koa后端接口
+    - app.js
+    - routes 路由层
+        - index.js 定义所有接口
+    - controllers 控制层
+    - config.js  启动mysql端口
+    - mysql.js   获取基础配置
+    - 导入nodemysql.sql文件 所有数据

@@ -36,7 +36,7 @@
 <script>
 import amapFile from '../../utils/amap-wx.js'
 import {mapState, mapMutations} from 'vuex'
-import { get } from '../../utils/index'
+import { get } from '../../utils/index'     // 导航的banner图我们采用get方法，那么导入get
 export default {
   data() {  //数据源
     return {
@@ -100,7 +100,6 @@ export default {
       // 调用封装接口请求
       // wx.request 封装接口请求，去utils/index.js: 封装接口请求
       // 这里是取数据源的，那就应该调用刚写的接口，那么就需要在当前页面引入get,post这两个方法
-      // 导航的banner图我们采用get方法，那么导入get
       // 此时的get的url可以写成任何样子，因为此处的路径是等会做后端开发时自己定义的路径，记得等会要与后端的一致
       const data=await get('/index/index') //后端必须有一个http://localhost:5757/lm/index/index
       // 这里的get方法是封装的请求
