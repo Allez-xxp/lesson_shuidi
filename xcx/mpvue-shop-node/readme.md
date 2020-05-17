@@ -25,8 +25,9 @@
         - 登录MySQL  mysql -u root -p
         - 修改root密码 
         use mysql；
-        ALTER user 'root'@'localhost' IDENTIFIED BY '新密码';
+        ALTER user 'root'@'localhost' IDENTIFIED BY '1234';
         FLUSH PRIVILEGES;
+        - 查看端口号 show global variables like 'port';
 
 - mysql数据操作
     - create database 数据库名;  创建数据库

@@ -108,7 +108,7 @@ export default {
       // 那么开始后端 用koa2提供/index/index接口给我们这里使用
       // 数据库的数据能输出了之后，接下来打通banner图的前后端协作连接，将数据成功渲染到页面中去。
       //把拿到的数据给到数据源中的banner[]
-      this.banner = data.banner
+      // this.banner = data.banner
 
     }
   }
