@@ -35,3 +35,16 @@
     - use 数据库名;  切换到该数据库
     - drop database 数据库名; 删除给数据库
     - source 导入文件所在的绝对路径名;  导入文件
+    - 查看某数据库当前的字符集 
+    show variables like 'character_set_database';
+    - 修改字符集（''放想要改的编码类型）
+    alter database cms character set 'utf8';
+    - 查看当前MySQL支持的所有字符集  show char set; 
+
+    - 导入sql文件，出现编码错误
+        - 连接数据库时设置编码 
+        mysql -u root -p --default-character-set=utf8;
+        - 切换到需要导入的数据库
+        use dbname;
+        - 使用source命令导入
+        source 导入文件的绝对路径;
