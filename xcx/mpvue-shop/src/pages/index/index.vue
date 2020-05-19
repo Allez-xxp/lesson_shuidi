@@ -20,15 +20,39 @@
       interval="3000"
       circular="true"
       duration="500">
-        <block v-for="(item,index) in banner" :key="index">
-          <!-- 用于for循环 
+        <!-- block : 用于for循环 
           swiper-item: 每一张轮播图
           -->
+        <block v-for="(item, index) in banner" :key="index">
           <swiper-item class="swiper-item">
-            <image class="slide-image" :src="item.image_url"/>
+            <image class="slide-image" :src="item.image_url" />
           </swiper-item>
         </block>
       </swiper>
+    </div >
+    <div class="channel">
+      <div v-for="(item, index) in channel" 
+      :key="index"
+       @click="categroyList(item.id)">
+        <img :src="item.icon_url" alt="">
+        <p>{{item.name}}</p>
+      </div>
+    </div>
+    <div class="brand">
+      <div class="head">
+        品牌制造商直供
+      </div>
+      <div class="content">
+        <div v-for="(item, index) in brandList" 
+        :key="index" 
+        @click="branddetail(item, id)">
+          <div>
+            <p>{{item.name}}</p>
+            <p class="price">{{item.floor_price}}元起</p>
+          </div>
+          <img :src="item.new_pic_url" alt="" >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -36,16 +60,22 @@
 <script>
 import amapFile from '../../utils/amap-wx.js'
 import {mapState, mapMutations} from 'vuex'
-import { get } from '../../utils/index'     // 导航的banner图我们采用get方法，那么导入get
+import { get } from '../../utils'     // 导航的banner图我们采用get方法，那么导入get
 export default {
   data() {  //数据源
     return {
       // cityName: "南昌",
-      banner:[]
+      banner:[],
+      channel:[],
+      brandList:[]
     }
   },
   computed: {
     ...mapState(['cityName'])
+  },
+  mounted() {
+    this.getData()
+    this.getCityName()
   },
   methods: {
     ...mapMutations(['update']),
@@ -101,15 +131,27 @@ export default {
       // wx.request 封装接口请求，去utils/index.js: 封装接口请求
       // 这里是取数据源的，那就应该调用刚写的接口，那么就需要在当前页面引入get,post这两个方法
       // 此时的get的url可以写成任何样子，因为此处的路径是等会做后端开发时自己定义的路径，记得等会要与后端的一致
-      const data=await get('/index/index') //后端必须有一个http://localhost:5757/lm/index/index
+      const data = await get('/index/index') //后端必须有一个http://localhost:5757/lm/index/index
       // 这里的get方法是封装的请求
       // 拿数据
       console.log(data)//现在还看不到拿到的数据是什么，因为还没写后端的项目
       // 那么开始后端 用koa2提供/index/index接口给我们这里使用
       // 数据库的数据能输出了之后，接下来打通banner图的前后端协作连接，将数据成功渲染到页面中去。
       //把拿到的数据给到数据源中的banner[]
-      // this.banner = data.banner
+      this.banner = data.banner,
+      this.channel = data.channel,
+      this.brandList = data.brandList
 
+    },
+    categroyList(id) {
+      wx.navigateTo({ //小程序：跳转下一个页面：navigateTo()
+         url: '/pages/categroyList/main?id=' + id  // 跳转路径绑定传递id
+      });
+    },
+    branddetail(id) {
+      wx.navigateTo({ 
+        url: '/pages/branddetail/main?id' + id 
+      });
     }
   }
 }

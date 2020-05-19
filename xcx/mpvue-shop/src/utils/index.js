@@ -19,7 +19,7 @@ export function formatTime (date) {
 }
 
 // ------------请求封装
-const host = "http:/localhost:5757/lm"
+const host = "http://localhost:5757/lm"
 export { host };
 //请求封装，封装接口请求一般都是封装成一个方法
 // header={}请求头，要不要都行
@@ -34,7 +34,8 @@ function request(url, method, data, header={}) {
   return new Promise((resolve,reject) => {
     wx.request({
       url: host + url,
-      method: data,
+      method: method,
+      data: data,
       header:{
         "content-type": "application/json" //默认的请求头
       },
