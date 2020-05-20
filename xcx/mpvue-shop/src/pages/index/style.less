@@ -114,4 +114,101 @@
             }
         }
     }
+    .newgoods{
+        width: 100%;
+        &-top{
+            margin-top: 20rpx;
+            height: 260rpx;
+            width: 100%;
+            background: url(../../../static/images/bgnew.jpg) no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .top{
+                p{
+                    color: #8c9bae;
+                    font-size: 32rpx;
+                }
+                p:nth-child(2) {
+                    width: 180rpx;
+                    height: 50rpx;
+                    line-height: 50rpx;
+                    margin: 27rpx auto 0 auto;
+                    font-size: 27rpx;
+                    background: #d8e4f0;
+                }
+            }
+        }
+        .list{
+            margin-top: 20rpx;
+            background-color: #fff;
+            padding-bottom: 10rpx;
+            ul{
+                .scroll-view{
+                    width: 100%;
+                    white-space: nowrap;
+                    li{
+                        width: 280rpx;
+                        height: 416rpx;
+                        margin: 5rpx 0 5rpx 25rpx;
+                        display: inline-block;
+                        img{
+                            width: 280rpx;
+                            height: 280rpx;
+                        }
+                        p{
+                            width: 94%;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            margin-top: 8rpx;
+                            text-indent: 1em;
+                        }
+                        p:nth-child(2) {
+                            font-size: 30rpx;
+                            font-weight: bold;
+                        }
+                        p:nth-child(3) {
+                            font-size: 24rpx;
+                            color: #8a8a8a;
+                        }
+                        p:nth-child(4) {
+                            font-size: 24rpx;
+                            color: #9c3232;
+                        }
+                    }
+                }
+                 
+            }
+        }
+    }
+    .hotgoods{
+        .newgoods-top{
+            background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1581431630102&di=0b43656381415529c979dc584031279a&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F961dab496108d2566ac781b308195b5e1b992a74b971-9RplaT_fw658') no-repeat;
+            background-size: 100% 100%;
+            .top{
+                p{
+                    color: #b1a279;
+                    font-size: 32rpx;
+                    vertical-align: middle;
+                }
+                p:nth-child(1) {
+                    span{
+                        width: 4rpx;
+                        height: 4rpx;
+                        font-size: 14rpx;
+                        display: inline-block;
+                        vertical-align: middle;
+                        background-color: #b1a279;
+                    }
+                }
+                p:nth-child(2) {
+                    background-color: #f4e9cd;
+                    font-size: 22rpx;
+                }
+            }
+        }
+    }
 }
