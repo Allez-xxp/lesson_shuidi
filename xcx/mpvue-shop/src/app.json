@@ -9,7 +9,8 @@
     "pages/mappage/main",
     "pages/brandList/main",
     "pages/newgoods/main",
-    "pages/topicdetail/main"
+    "pages/topicdetail/main",
+    "pages/search/main"
   ],
   "permission": {
     "scope.userLocation": {

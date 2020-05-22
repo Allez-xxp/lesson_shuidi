@@ -1,0 +1,73 @@
+.search{
+    height: 100%;
+    position: relative;
+    .head{
+        height: 91rpx;
+        display: flex;
+        padding: 0 32rpx;
+        align-items: center;
+        justify-content: space-between; //空格环绕
+        background-color: #fff;
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+        div:nth-child(1){
+            height: 59rpx;
+            display: flex;
+            align-items: center;
+            background: #f4f4f4;
+            img{
+                display: inline-block;
+                width: 31rpx;
+                height: 31rpx;
+                padding: 0 20rpx;
+            }
+            input{
+                display: inline-block;
+                width: 480rpx;
+                height: 59rpx;
+                margin-left: 10rpx;
+            }
+            .del{
+                width: 35rpx;
+                height: 35rpx;
+                padding: 0;
+            }
+        }
+        div:nth-child(2){
+            flex: 1;  //让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容
+            text-align: center;
+        }
+    }
+    .history{
+        background: #fff;
+        padding: 32rpx;
+        .text{
+            display: flex; //这样历史纪录标签和垃圾桶就会去同一行
+            justify-content: space-between; //中间用空格空开
+            align-items: center;
+            margin-bottom: 30rpx;
+            div:nth-child(2){ //垃圾桶的样式
+                width: 40rpx;
+                height: 40rpx;
+                background: url("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3606576963,2872777574&fm=26&gp=0.jpg") no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+        .context{
+            display: flex;
+            flex-wrap: wrap;
+            div{
+                padding: 10rpx;
+                border: 1rpx solid #999;
+                margin: 0 30rpx 20rpx 0;
+            }
+            .active{
+                border: 1rpx solid #b4282d;
+                color: #b4282d;
+            }
+        }
+        
+    }
+    .hotsearch{
+        margin-top: 20rpx;
+    }
+}

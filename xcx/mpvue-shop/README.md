@@ -11,7 +11,8 @@
     - pages 页面具体操作；引用pages里的文件需提前声明
     - static 提供静态资源（图片）
 
-- 针对首页设计，地图定位设计
+- 首页设计，
+- 地图定位设计
     - 样式设计，引入less插件
     1. 安装less到项目中。 
     npm install less less-loader --save

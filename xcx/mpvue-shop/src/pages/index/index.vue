@@ -3,7 +3,7 @@
     <!-- 头部搜索 -->
     <div class="search">
       <div @click="toMappage">{{cityName}}</div>
-      <div>
+      <div @click="toSearch">
         <input type="text" placeholder="搜索商品" />
         <!-- 放大镜位置，放置图片，用position定位到input输入框中 -->
         <span class="icon"></span>
@@ -233,6 +233,11 @@ export default {
       this.hotGoods = data.hotGoods,
       this.topicList = data.topicList,
       this.newCategoryList = data.newCategoryList
+    },
+    toSearch() {
+      wx.navigateTo({ 
+        url: '/pages/search/main' 
+      });
     },
     categroyList(id) {
       wx.navigateTo({ //小程序：跳转下一个页面：navigateTo()
