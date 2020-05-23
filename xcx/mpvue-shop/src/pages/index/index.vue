@@ -1,9 +1,10 @@
 <template>
+<!-- 首页 -->
   <div class="index">
     <!-- 头部搜索 -->
     <div class="search">
       <div @click="toMappage">{{cityName}}</div>
-      <div @click="toSearch">
+      <div @click="toSearch"> <!-- 点击跳转到search页面 -->
         <input type="text" placeholder="搜索商品" />
         <!-- 放大镜位置，放置图片，用position定位到input输入框中 -->
         <span class="icon"></span>

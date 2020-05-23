@@ -24,7 +24,8 @@ const controllers = require('../controllers/index') //只引入到controllers，
 // 为了将项目更加地模块化通常会将(ctx,next)那个箭头函数写成一个控制层（专门用来写具体要干嘛的）。去controller(建home->index,js)
 router.get('/index/index',controllers.home.index) //此刻原来的箭头函数就被controller层替代了
 
-//搜索相关的接口
+// 搜索相关的接口
+// 2. 热门搜索接口，去定义controllers/search/index.js indexaction方法
 router.get('/search/indexaction',controllers.search.index.indexAction)
 
 // router.post('/search/addhistoryaction', (ctx,next)=>{
@@ -34,8 +35,9 @@ router.get('/search/indexaction',controllers.search.index.indexAction)
 //     }
 // })逻辑是这样的，但我们不这样写：
 
-//addhistoryaction得去定义它，来到search/index
-//当用户请求当前这个接口的时候就意味着用户输入的内容（search/index里面的openId,keyword)会被插入到后端数据库中去
+// addhistoryaction得去定义它，来到controllers/search/index.js
+// 当用户请求当前这个接口的时候就意味着用户输入的内容（search/index里面的openId,keyword)会被插入到后端数据库中去
+// 1. 历史记录接口，去定义controllers/search/index.js addhistoryaction方法
 router.post('/search/addhistoryaction',controllers.search.index.addHistoryAction) 
 
 
