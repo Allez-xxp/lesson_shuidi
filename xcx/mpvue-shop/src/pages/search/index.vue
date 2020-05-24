@@ -22,13 +22,16 @@
             </div>
             <div class="nogoods">数据库暂无此类商品</div>
         </div>
-        <div class="history">
+        <div class="history" v-if="historyData.length!==0">
             <div class="text">
                 <div>历史记录</div>
+                <!-- 垃圾桶 清空历史记录 -->
                 <div @click="clearHistory"></div>
             </div>
             <div class="context">
-                <div>日式</div>
+                <div v-for="(item, index) in historyData" :key="index">
+                  {{item.keyword}}
+                </div>
             </div>
         </div>
         <div class="history hotsearch">
@@ -36,10 +39,12 @@
                 <div>热门搜索</div>    
             </div>
             <div class="context">
-                <div class="active">日式</div>
-                <div>日式1</div>
-                <div>日式2</div>
-                <div>日式3</div>
+              <!-- 动态添加类名，给第一框添加样式；:class="{active: item.is_hot===1}-->
+                <div  v-for="(item, index) in hotData" 
+                :key="index" :class="{active: item.is_hot===1}">
+                  {{item.keyword}}
+                </div>
+                
             </div>
         </div>
     </div>
@@ -57,8 +62,8 @@ export default {
     }
   },
   mounted (){
-    //？？this.openid往本地存储（getStorageSync）把openid取出来,小程序其他页面要用也要把openid取出来用
-    this.openid = wx.getStorageSync('openid') || ''; 
+    //？？this.openid往本地存储（getStorageSync）把openId取出来,小程序其他页面要用也要把openId取出来用
+    this.openid = wx.getStorageSync('openId') || ''; 
     this.getHotData() //先看下效果，去页面搜索/search/indexaction
   },
   methods:{
@@ -73,14 +78,14 @@ export default {
     clearHistory(){
 
     },
-    inputFocus(){
+    inputFocus(){  //点击搜索框input，再次聚焦（出现刚刚查询的记录）
 
     },
     tipsearch(){
 
     },
 
-    // 
+    // 搜索方法
     async searchWords(e){ // 因为是要做接口请求的方法，所以直接写成异步方法
       // 是有两种方法是可以拿到input框中的值的：1.this.words,拿到数据源中的值（vue中的语法，双向数据绑定）2.我们用的这个（小程序当中的语法）
       // console.log(e) //看看这个事件参数中会存在什么东西(电脑上直接回车看结果)
@@ -91,7 +96,7 @@ export default {
       // 添加历史搜索记录的接口（请求的路径）；请求到的数据要做的操作是？第二个操作传参数(data)
       const data = await post('/search/addhistoryaction',{
         // 把openId和keyword这两个参数传给当前接口addhistoryaction
-        openId: this.words,
+        openId: this.openid,
         keyword: value || this.words
       })
       console.log(data) // 现在还不能在控制台看到data,因为当前的接口还未被定义出来，那么我们去后端。
@@ -107,7 +112,7 @@ export default {
       //openId是之前定义的一个参数的key值，跟数据源无关，openid是我们需要去取到的用户的身份信息
       //取出热门搜索，历史记录
       this.historyData = data.historyData
-      this.hotData = data.hotData
+      this.hotData = data.hotKeywordList
       console.log(data)  
       //然后我们先去后端把indexaction接口定义出来。
     }

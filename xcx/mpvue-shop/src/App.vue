@@ -2,6 +2,21 @@
 export default {
   created () {
     // 调用API从本地缓存中获取数据
+    //我们的openId,avatarUrl是微信头像
+    var userInfo = {
+      openId: "oQmbb4sNZdxaUQZ0sfYgvtOP2S7c",
+      nickName: "蜗牛",
+      gender: 1,
+      language: "zh_CN",
+      city: "Changping",
+      province: "Beijing",
+      country: "China",
+      avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIbWFEIJj8IpGeHM7dGic1aTFZALjWcMm9ltWfFiaQfVRYticWBfgGfzXWMt2EkJWiaicPtftHAlWxUibxQ/132",
+      watermark: { timestamp: 1535513485, appid: "wx601ce71bde7b9add" } //就是登录微信开发者工具的那个id
+    };
+    var openId = userInfo.openId; //单独取出来id
+    wx.setStorageSync("userInfo", userInfo);
+    wx.setStorageSync("openId", openId); //把openId单独作为key值为openId,value值为openId存到小程序的本地存储localStorage里面，并且把userInfo也存了一份
     /*
      * 平台 api 差异的处理方式:  api 方法统一挂载到 mpvue 名称空间, 平台判断通过 mpvuePlatform 特征字符串
      * 微信：mpvue === wx, mpvuePlatform === 'wx'

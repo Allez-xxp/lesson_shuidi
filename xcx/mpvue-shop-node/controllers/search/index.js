@@ -16,11 +16,9 @@ async function indexAction(ctx){
     const hotKeywordList = await mysql('nideshop_keywords')
     .distinct('keyword').column('keyword','is_hot').limit(10).select()
   
-
     // 获取搜索历史记录
     const historyData = await mysql('nideshop_search_history').where({
-        //必须要根据openId,因为是你自己的数据就只有自己能取出来，不会看到别人的历史
-        'user_id':openId 
+        'user_id':openId //必须要根据openId,因为是你自己的数据就只有自己能取出来，不会看到别人的历史
     }).limit(10).select()
     
     ctx.body = {
@@ -37,10 +35,11 @@ async function addHistoryAction(ctx){
     // 因为我们做接口请求传过来的参数就是被ctx.request.body拿到，然后再把拿到的两个参数解构出来
     const { openId,keyword} = ctx.request.body 
     //先获取到上一次的搜索记录(是有一张表（历史搜索记录）nideshop_search_history)
-    const oldData =await mysql('nideshop_search_history').where({
+    const oldData = await mysql('nideshop_search_history').where({
         'user_id': openId, //就是传过来的this.words
         'keyword': keyword
     })
+    console.log(oldData);
     // 如果有就去执行取出，有，就说明当前表中已经保存了这条数据了，也就是说其实我现在搜索的记录其实已经保存到数据库中了，
     // 也就是不用再做第二次保存了，这也是为什么要先查找匹配的原因
     if(oldData.length == 0){
