@@ -64,8 +64,57 @@ async function addHistoryAction(ctx){
     }
 }
 
-//模板抛出，先把方法抛出去，以保证routes/index的addhistoryaction能获取到
+// 清空历史记录的方法clearHistoryAction
+async function clearHistoryAction(ctx) {
+    // 可以拿到前端传来的openId
+    const openId = ctx.request.body.openId  
+    // console.log(openId)
+    const data = await mysql('nideshop_search_history').where({
+        // 判断user_id和openId的值是否相等
+        'user_id': openId
+    }).del() //若相等则删除; 返回值是删除了多少条数据
+    if(data) {
+        ctx.body = {
+            'data': '清除成功'
+        }
+    } else {
+        ctx.body = {
+            'data': 'null'
+        }
+    }
+}
+
+// 搜索时匹配搜索相关内容方法helperAction
+async function helperAction(ctx) {
+    // 使用get方法传参，使用query接收
+    // 应该做一个防抖，防止输入数据过多，之后再做
+    const keyword = ctx.query.keyword
+    // console.log(keyword)
+    var order = ctx.query.order
+    if(!order) {
+        order = ''
+        orderBy = 'id'
+    } else {
+        orderBy = 'retail_price'
+    }
+    const keywords = await mysql('nideshop_goods').orderBy(orderBy, order)
+    .column('id','name','list_pic_url','retail_price')  // column：按照什么分段
+    .where('name','like','%' + keyword + '%').limit(10).select() // where: 是否存在什么什么的数据输出；关键字相关查询
+    if(keywords) {
+        ctx.body = {
+            keywords
+        }
+    } else {
+        ctx.body = {
+            keywords: []
+        }
+    }
+}
+
+//模板抛出，先把方法抛出去，以保证routes/index的相关接口能获取到
 module.exports = {
     addHistoryAction,
-    indexAction
+    indexAction,
+    clearHistoryAction,
+    helperAction
 }

@@ -34,11 +34,17 @@ router.get('/search/indexaction',controllers.search.index.indexAction)
 //         // hello 往页面上面输出....
 //     }
 // })逻辑是这样的，但我们不这样写：
-
 // addhistoryaction得去定义它，来到controllers/search/index.js
 // 当用户请求当前这个接口的时候就意味着用户输入的内容（search/index里面的openId,keyword)会被插入到后端数据库中去
 // 1. 历史记录接口，去定义controllers/search/index.js addhistoryaction方法
 router.post('/search/addhistoryaction',controllers.search.index.addHistoryAction) 
+
+// 清空历史记录的接口
+router.post('/search/clearhistoryaction',controllers.search.index.clearHistoryAction) 
+
+// 搜索提示接口
+router.get('/search/helperaction',controllers.search.index.helperAction)
+
 
 
 
