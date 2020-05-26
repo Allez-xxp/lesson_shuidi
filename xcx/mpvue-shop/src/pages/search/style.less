@@ -92,4 +92,93 @@
     .hotsearch{
         margin-top: 20rpx;
     }
+    .goodsList{
+        position: absolute;
+        width: 100%;
+        top: 91rpx;
+        left: 0;
+        bottom: 0;
+        box-sizing: border-box;
+        padding: 0 32rpx;
+        z-index: 9;
+        background: #fff;
+        overflow-y: scroll; //y轴超出滚动
+        -webkit-overflow-scrolling: touch; //兼容；移动端touch
+        .sortnav{
+            display: flex;
+            width: 100%;
+            height: 78rpx;
+            line-height: 78rpx;
+            background: #fff;
+            border-bottom: 1rpx solid #d9d9d9;
+            div{
+                width: 250rpx;
+                height: 100%;
+                text-align: center;
+            }
+            //点击谁，谁就标红
+            .active{ 
+                color: #b4282d;
+            } 
+            //价格上下键背景图
+            .price {
+                background: url(//yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/no-3127092a69.png) 165rpx center no-repeat;
+                background-size: 15rpx 21rpx;
+            }
+            .active.desc {
+                background: url(http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/down-95e035f3e5.png) 165rpx center no-repeat;
+                background-size: 15rpx 21rpx;
+            }
+            .active.asc {
+                background: url(http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/up-636b92c0a5.png) 165rpx center no-repeat;
+                background-size: 15rpx 21rpx;
+            } 
+        }
+        .sortlist{
+            //商品列表
+            display: flex;  //去同一行
+            justify-content: space-between;  //中间用空格撑开
+            flex-wrap: wrap;  //规定灵活的项目在必要的时候拆行或拆列
+            .item{  //每件商品
+                box-sizing: border-box; //不加，然后你直接设w:50%的话，被撑开，会换行,因为我们还有空格
+                width: 50%;
+                padding: 15rpx 0;
+                text-align: center; //文字居中
+                background-color: #fff;
+                border-bottom: 1px solid #d9d9d9; //对于左边的盒子合理，右边的不行
+                border-right: 1px solid #d9d9d9;
+                
+                img{
+                    display: block;
+                    // 正方形图片：宽高相等
+                    width: 302rpx;
+                    height: 302rpx;
+                    margin: 0 auto; //左右居中
+                }
+                .name{
+                    margin: 15rpx 0 22rpx 0;
+                    text-align: center;
+                    padding: 0 20rpx;
+                    font-size: 24rpx;
+                }
+                .price{
+                    text-align: center;
+                    font-size: 30rpx;
+                    color: #b4282d;
+                }
+            }
+            .item:nth-child(2n){ //所有右边的盒子的边框（偶数）
+                border-right: none;
+            }
+            .item.active:nth-last-child(1){ //对于左边的盒子 //nth-last-child同时含有item和active这个类名的，最后一个容器（最后一行也就是倒数第一个和倒数第二个）
+                border-bottom: none;
+            }
+            .item.active:nth-last-child(2){ //对于右边的盒子 //nth-last-child同时含有item和active这个类名的，最后一个容器（最后一行也就是倒数第一个和倒数第二个）
+                border-bottom: none;
+            }
+            .item.none:last-child{ //有item和none类名的，最后一个盒子
+                border-bottom: none;
+            }
+        } 
+    }
 }

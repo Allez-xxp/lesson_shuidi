@@ -58,6 +58,22 @@
                 
             </div>
         </div>
+
+        <!-- 商品列表 -->
+        <div class="goodsList" v-if="listData.length !==0">
+          <div class="sortnav">
+            <div @click="changeTab(0)" :class="[0 === nowIndex ? 'active': '']">综合</div>
+            <div @click="changeTab(1)" :class="[1 === nowIndex ? 'active': '']" class="price" >价格</div>
+            <div @click="changeTab(2)" :class="[2 === nowIndex ? 'active': '']">分类</div>
+          </div>
+          <div class="sortlist">
+            <div class="item" v-for="(item, index) in listData" :key="index">
+              <img :src="item.list_pic_url" alt="">
+              <p class="name">{{item.name}}</p>
+              <p class="price">￥{{item.retail_price}}</p>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -70,7 +86,10 @@ export default {
       openid:'',
       hotData:[], //热门搜索
       historyData:[],  //历史记录
-      tipsData:[]  //输入提示语
+      tipsData:[],  //输入提示语
+      order:'',
+      listData:[],  //商品列表
+      nowIndex:0   //默认标红
     }
   },
   mounted (){
@@ -126,13 +145,14 @@ export default {
       // 添加历史搜索记录的接口（请求的路径）；请求到的数据要做的操作是？第二个操作传参数(data)
       const data = await post('/search/addhistoryaction',{
         // 把openId和keyword这两个参数传给当前接口addhistoryaction
-        openId: this.openid,
-        keyword: value || this.words
+        openId:this.openid, //用来区分不通用户的搜索记录
+        keyword:value || this.words //搜索框搜索的内容
       })
       console.log(data) // 现在还不能在控制台看到data,因为当前的接口还未被定义出来，那么我们去后端。
       // routes/index.js->search/index写完给数据库添加搜索记录的接口之后，去浏览器5757/lm/search/addhistoryaction看看 not found,接口是需要传入参数的，所以我们在放上一个取历史搜索记录的方法。
       // 获取历史搜索记录(应该是实时出现的，也就是存的同时也要拿出来展示)
       this.getHotData()
+      this.getlistData()
     },
 
     // 获取历史搜索记录(应该是实时出现的，也就是存的同时也要拿出来展示)
@@ -145,6 +165,34 @@ export default {
       this.hotData = data.hotKeywordList
       console.log(data)  
       //然后我们先去后端把indexaction接口定义出来。
+    },
+    // 获取商品列表，调用接口请求：将商品数据展示获取回来
+    async getlistData(){
+      const data = await get('/search/helperaction', {
+        keyword: this.words,   //关键字，查找相应数据
+        order: this.order
+      })
+      //为数据源放数据
+      this.listData = data.keywords
+      // 如果商品列表已经出现页面上就不需要展示我们的输入补全, 则清空tipsData设置为空
+      this.tipsData = []
+      // console.log(data)
+    },
+    changeTab(index) {
+      // 数据源中放上一个初始数据nowIndex:0 
+      //默认一进来就是综合,要标红，意味着要给综合加上active类名（样式中是这个）
+      this.nowIndex = index
+      //对于价格，还需要：
+      if( index === 1) { 
+      //将数据源中的重新赋值
+      //再判断当前数据源中order是否等于'asc', 然后根据结果，两个图片才会来回切换
+        this.order = this.order == 'asc'? 'desc' : 'asc' 
+      } else {
+        //只有价格没被点击的时候，才都不显示
+        this.order = '' 
+      }
+      //每次点击tab,都会去重新做接口请求
+      this.getlistData()
     }
   }
 }

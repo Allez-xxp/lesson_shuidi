@@ -97,6 +97,7 @@ async function helperAction(ctx) {
     } else {
         orderBy = 'retail_price'
     }
+    
     const keywords = await mysql('nideshop_goods').orderBy(orderBy, order)
     .column('id','name','list_pic_url','retail_price')  // column：按照什么分段
     .where('name','like','%' + keyword + '%').limit(10).select() // where: 是否存在什么什么的数据输出；关键字相关查询
