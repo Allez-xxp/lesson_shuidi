@@ -85,6 +85,7 @@ async function clearHistoryAction(ctx) {
 }
 
 // 搜索时匹配搜索相关内容方法helperAction
+// 包含输入提示语方法，获取商品列表数据order
 async function helperAction(ctx) {
     // 使用get方法传参，使用query接收
     // 应该做一个防抖，防止输入数据过多，之后再做
@@ -97,7 +98,7 @@ async function helperAction(ctx) {
     } else {
         orderBy = 'retail_price'
     }
-    
+
     const keywords = await mysql('nideshop_goods').orderBy(orderBy, order)
     .column('id','name','list_pic_url','retail_price')  // column：按照什么分段
     .where('name','like','%' + keyword + '%').limit(10).select() // where: 是否存在什么什么的数据输出；关键字相关查询

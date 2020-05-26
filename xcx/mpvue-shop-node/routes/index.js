@@ -45,6 +45,9 @@ router.post('/search/clearhistoryaction',controllers.search.index.clearHistoryAc
 // 搜索提示接口
 router.get('/search/helperaction',controllers.search.index.helperAction)
 
+// 商品详情页相关接口
+router.get('/goods/detailaction',controllers.goods.index.detailAction)
+
 
 
 

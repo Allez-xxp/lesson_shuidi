@@ -3,11 +3,13 @@
     <div class="search">
         <div class="head">
             <!-- 就像我们消息的键盘右下角有发送或者是搜索，这个状态只可以自主更改的。confirm-type只能在type=”text”的时候才能设置。
-            focus="true" 是允许聚焦。
-            @focus绑定一个focus,即聚焦事件：当搜索牙刷时显示了牙刷商品，当再次点击input框时，收起商品展示，回到搜索条。
-            @input=""再绑定input事件，在小程序中input事件展示搜索提示信息。
-            @confirm="searchWords"就是当点击搜索的时候，执行searchWords事件。
-            v-model="words" 绑定数据源，当点击热门搜索或历史记录的div，执行searchWords时，input框中的value值发生改变，即数据源发生改变-->
+              focus="true" 是允许聚焦。
+              @focus绑定一个focus,即聚焦事件：当搜索牙刷时显示了牙刷商品，当再次点击input框时，收起商品展示，回到搜索条。
+              @input=""再绑定input事件，在小程序中input事件展示搜索提示信息。
+              @confirm="searchWords"就是当点击搜索的时候，执行searchWords事件。
+              v-model="words" 绑定数据源，当点击热门搜索或历史记录的div，执行searchWords时，input框中的value值发生改变，即数据源发生改变
+              @click="clearInput"，点击×图片，清空输入框内容以及搜索出的页面内容
+            -->
             <div>
                 <img src="http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png" alt="">
                 <input type="text" confirm-type="search" focus="true" v-model="words" @focus="inputFocus" @input="tipsearch" @confirm="searchWords" placeholder="商品搜索">
@@ -16,18 +18,24 @@
             <div @click="cancel">取消</div>
         </div>
         
-        <!-- 1. 有和没有所搜索的商品，两个div应该是只能存在一个的，所以放v-if 
+        <!-- 搜索框input；输入提示语
+             1. 有和没有所搜索的商品，两个div应该是只能存在一个的，所以放v-if 
              2. v-if和v-for不能放在一个dom结构上，不能一起使用
         -->
         <div class="searchtips" v-if="words">
           <div v-if="tipsData.length != 0">
-            <div v-for="(item, index) in tipsData" :key="index" >
+            <div v-for="(item, index) in tipsData" 
+            :key="index" @click="searchWords"
+            :data-value="item.name"
+            >
                 {{item.name}}
             </div>
           </div>
           <div class="nogoods" v-else>数据库暂无此类商品.....</div>
         </div>
-
+        <!-- 1.获取历史记录，显示到页面
+             2.清空历史记录
+         -->
         <div class="history" v-if="historyData.length!==0">
             <div class="text">
                 <div>历史记录</div>
@@ -41,7 +49,7 @@
                 </div>
             </div>
         </div>
-        
+        <!-- 热门搜索 -->
         <div class="history hotsearch">
             <div class="text">
                 <div>热门搜索</div>    
@@ -59,7 +67,10 @@
             </div>
         </div>
 
-        <!-- 商品列表 -->
+        <!-- 获取商品列表 
+             1. 导航栏tab，点击标红（价格升序降序排列）
+             2. 商品排序
+        -->
         <div class="goodsList" v-if="listData.length !==0">
           <div class="sortnav">
             <div @click="changeTab(0)" :class="[0 === nowIndex ? 'active': '']">综合</div>
@@ -67,7 +78,8 @@
             <div @click="changeTab(2)" :class="[2 === nowIndex ? 'active': '']">分类</div>
           </div>
           <div class="sortlist">
-            <div class="item" v-for="(item, index) in listData" :key="index">
+            <!-- @click="goodsDetail(item.id)": 传实参id，用于区分点击的是哪个商品 -->
+            <div @click="goodsDetail(item.id)" class="item" v-for="(item, index) in listData" :key="index">
               <img :src="item.list_pic_url" alt="">
               <p class="name">{{item.name}}</p>
               <p class="price">￥{{item.retail_price}}</p>
@@ -82,8 +94,8 @@ import {get, post} from '../../utils'  //引入get，post的封装方法
 export default {
   data (){
     return {
-      words:'',
-      openid:'',
+      words:'',  //搜索框内容
+      openid:'',  //识别用户信息
       hotData:[], //热门搜索
       historyData:[],  //历史记录
       tipsData:[],  //输入提示语
@@ -98,8 +110,10 @@ export default {
     this.getHotData() //先看下效果，去页面搜索/search/indexaction
   },
   methods:{
+    // 清空输入框内容以及搜索出的页面内容
     clearInput(){
       this.words=''
+      this.listData = []
     },
     //取消，即返回上一级
     cancel(){  
@@ -121,7 +135,10 @@ export default {
     },
     //点击搜索框input，再次聚焦（出现刚刚查询的记录）
     inputFocus(){  
-
+      // 商品清空
+      this.listData = []
+      // 展示搜索提示消息
+      this.tipsearch() 
     },
     // 在input框中但凡有内容发生变化都会触发tipsearch事件
     // 获取input框中数据，进行实时的接口请求, 异步操作
@@ -154,7 +171,6 @@ export default {
       this.getHotData()
       this.getlistData()
     },
-
     // 获取历史搜索记录(应该是实时出现的，也就是存的同时也要拿出来展示)
     async getHotData(first){
       // this.openid从哪里来？所以要在数据源放上一个id
@@ -166,7 +182,7 @@ export default {
       console.log(data)  
       //然后我们先去后端把indexaction接口定义出来。
     },
-    // 获取商品列表，调用接口请求：将商品数据展示获取回来
+    // 获取商品列表，调用接口请求（与输入提示语接口相同）：将商品数据展示获取回来
     async getlistData(){
       const data = await get('/search/helperaction', {
         keyword: this.words,   //关键字，查找相应数据
@@ -193,6 +209,14 @@ export default {
       }
       //每次点击tab,都会去重新做接口请求
       this.getlistData()
+    },
+    // 商品详情页
+    goodsDetail(id) {
+      // 跳转去到详情页
+      wx.navigateTo({
+        url: '/pages/goods/main?id=' +id
+      });
+
     }
   }
 }
