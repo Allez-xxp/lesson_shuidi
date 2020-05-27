@@ -16,7 +16,7 @@ async function detailAction(ctx) {
     })
     // 向前端页面输出
     ctx.body = {
-        'info':info,
+        'info':info[0] || [],  
         'gallery':gallery
     }
 }

@@ -1,0 +1,109 @@
+.goods{
+    overflow: hidden; //超出则隐藏
+    .swiper{
+        // 设置宽高固定长度
+        width: 750rpx;
+        height: 750rpx;
+        position: relative; //相对单位，以他为父容器
+        // 继承父容器swiper的宽高
+        &-container{
+            width: 100%;
+            height: 100%;
+            // 继承父容器container的宽高
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .share{
+            position: absolute;
+            // 按钮样式：左边为弧形，右边不设置
+            border-radius: 40rpx 0 0 40rpx;  //圆角；四个值：左上角，右上角，右下角，左下角
+            width: 150rpx;
+            height: 65rpx;
+            line-height: 65rpx;
+            text-align: center;  //文字居中对齐
+            right: 0;  //绝对定位，距离右边为0
+            top: 50rpx; //绝对定位，距离顶部为50rpx
+            background-color: #e0a354;
+            color: #fff; //字体颜色
+            font-size: 24rpx;
+        }
+    }
+    .swiper-b{
+        width: 710rpx;
+        height: 73rpx;
+        margin: 0 auto;
+        background: #f4f4f4;
+        //去同一行
+        display: flex;
+        align-items: center; //居中对齐
+        justify-content: space-between; //x轴用空白撑开
+        div{
+            // 小圆圈的背景图片（在线地址），y轴居中，不平铺
+            background: url('http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/servicePolicyRed-518d32d74b.png') 0 center no-repeat;
+            background-size: 10rpx;
+            padding-left: 15rpx;
+            display: flex;
+            align-items: center; //align-items 属性定义flex子项在flex容器的当前行的侧轴（纵轴）方向上的对齐方式
+            font-size: 25rpx;
+            color: #666;
+        }
+    }
+    .goods-info{
+        width: 750rpx;
+        height: 306rpx;
+        background-color: #fff;
+        margin: 0 auto;
+        border-bottom: 1px solid #f4f4f4;  // 底边框
+        .c{
+            height: 100%;
+            p{
+                display: block;
+                text-align: center;
+            }
+            p:nth-child(1) {
+                font-size: 41rpx;
+                padding: 20rpx;
+            }
+            p:nth-child(2) {
+                font-size: 24rpx;
+                margin-bottom: 25rpx;
+                color:#999;
+            }
+            p:nth-child(3) {
+                font-size: 35rpx;
+                margin-top: 10rpx;
+                color:#b4282d;
+            }
+            .brand{
+                margin-top: 25rpx;
+                text-align: center;
+                p{
+                    display: inline-block;  //行内块级元素
+                    color: #b1a279;
+                    font-size: 20rpx;
+                    padding: 5rpx 30rpx;
+                    border: 1rpx solid #b1a279;
+                }
+            }
+        }
+    }
+    .section-nav{
+        height: 108rpx;
+        background: #fff;
+        margin-bottom: 20rpx;
+        padding: 0 20rpx;
+        display: flex;  // 弹性布局
+        justify-content: space-between; //x轴 空格隔开
+        align-items: center;  //y轴居中对齐
+        div:nth-child(2){  // 第二个div
+            width: 52rpx;
+            height: 52rpx;
+            // 背景图片，不平铺
+            background:url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587487726509&di=41c3eb6cda7773252a0bde7a3347cd45&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F33%2F44%2F581122b5d2b9d_610.jpg') no-repeat;
+            background-size: 100% 100%;
+        }
+    }
+    
+}
