@@ -105,5 +105,116 @@
             background-size: 100% 100%;
         }
     }
-    
+    .pop{ //要做成一个遮罩层，一般要做成相对于浏览器定位
+        position: fixed;
+        top: 0;
+        left: 0;//或者写right0,buttom0强行变成跟手机屏幕一样大
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5); //给0.5的透明度
+    }
+    .attr-pop{
+        position: fixed;
+        width: 100%;
+        //因为高度是500然后初始位置为-500的时候就是在整个手机屏幕最下面，看不到，点击的时候才出来
+        height: 500rpx;
+        bottom: -500rpx; 
+        //transition: 控制所有的动画，属性变化
+        // (过渡属性）则默认为all，表示所有可过渡属性。 
+        // ease线性变化 缓慢的 400毫秒之间去执行   
+        transition: all 400ms ease;
+        box-sizing: border-box;
+        padding: 30rpx;
+        background-color: #fff;
+        .top{
+            display: flex;
+            margin-bottom: 35rpx;
+            position: relative;
+            .close{  // 定位到最右边
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 30rpx;
+                color: #999;
+                
+            }
+            .left{
+                float: left; //左浮动 或脱离文档流
+                height: 177rpx;
+                width: 177rpx;
+                margin-right: 30rpx;
+                img{
+                    float: left;
+                    height: 177rpx;
+                    width: 177rpx;
+                }
+            }
+            .right{
+                flex: 1;  //继承父容器宽高，
+                display: flex;
+                align-items: flex-end;  //y轴方向
+                p{
+                    width: 100%;
+                    line-height: 45rpx;
+                }
+                p:nth-child(1) {
+                    color: #b4282d;
+                }
+
+            }
+        }
+        .bottom{
+            .count{
+                width: 322rpx;
+                height: 71rpx;
+                line-height: 71rpx;
+                display: flex;
+                border: 1rpx solid #ccc;
+                margin-top: 20rpx;
+                div{
+                    width: 90rpx;
+                    text-align: center;
+                }
+                input{
+                    flex: 1;
+                    height: 100%;  //高度继承父的高度
+                    text-align: center; //文字居中
+                    border-left: 1rpx solid #ccc;
+                    border-right: 1rpx solid #ccc;
+                }
+            }
+        }
+    }
+    .fadeup{
+        transform: translateY(-500rpx); 
+        // 动画,在y轴上移动-500rpx,也就是当被加上这个类名的时候，就会在y轴也就是往上移动500rpx的距离（button就会从-500->0,就能出现了）
+        // 而且transform归transition管，我们设置了all,表示transition只要有属性发生变化，都会执行400ms的延迟
+    }
+    .attribute{
+        padding: 20rpx 30rpx;
+        background-color: #fff;
+        margin-bottom: 20rpx;
+        .head{
+            font-size: 38rpx;
+            padding: 20rpx 0;
+        }
+        .item{
+            display: flex;
+            background: #f7f7f7;
+            padding: 20rpx 0;
+            margin: 20rpx;
+            div:nth-child(1) {
+                width: 134rpx;
+                font-size: 25rpx;
+                color: #999;
+            }
+            div:nth-child(2) {
+                flex: 1;
+                // 超出则打点
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
 }

@@ -19,6 +19,7 @@
                     </swiper-item>
                 </block>
             </swiper>
+
             <!-- 小程序分享按钮 -->
             <!-- 手机上手指触摸屏幕的高亮显示，通常我们回去干掉这个操作：hover-class="none" -->
             <!-- 当手机触摸屏幕的时候，会被添加上一个为none的类名， -->
@@ -26,12 +27,14 @@
             <!-- 只有加了open-type这个属性，小程序才会认可当前这个按钮能够触发分享功能 -->
             <button class="share" hover-class="none" open-type="share" value="">分享商品</button>
         </div>
+
         <!-- 轮播图下的介绍（优点） -->
         <div class="swiper-b">
             <div class="item">30天无忧退货</div>
             <div class="item">48小时快速退款</div>
             <div class="item">满88元免邮费</div>
         </div>
+
         <!-- 商品描述 -->
         <div class="goods-info">
             <div class="c">
@@ -44,6 +47,7 @@
                 </div>
             </div>
         </div>
+        
         <!-- 选择规格数量栏 -->
         <div class="section-nav" @click="showType">
             <div>请选择规格数量</div>
@@ -51,11 +55,66 @@
             <div></div>  
         </div>
         <!-- 选择规格的弹出层 -->
+        <!-- 这个pop作为遮罩层显示, 遮罩层是默认不出现的  -->
+        <!-- 因此pop这个盒子用一个v-show="showpop",
+        (v-if：用它来控制现实和隐藏的时候，是直接控制html结构是否被编译，如果被编译，编译与不编译都会触发浏览器的重塑和回流操作，所以如果有一块DOM结构是频繁出现和消失的时候，用v-if就会加大浏览器的性能消耗，
+        v-show：只是在修改css的显示与隐藏，不会触发html结构的重塑和回流，） -->
+        <!-- 然后点击遮罩层和叉叉都能把弹出层叉掉，遮罩层绑定一个点击事件 @click="showType"-->
+        <div class="pop" v-show="showpop" @click="showType"></div>
+        <!-- 动态绑定一个类名，用来修改弹出层的样式，同时，弹不弹出有遮罩层出没出来决定 -->
+        <div class="attr-pop" :class="[showpop ? 'fadeup' : 'fadedown']">
+            <div class="top">
+                <div class="left">
+                    <img :src="info.primary_pic_url" alt="">
+                </div>
+                <div class="right">
+                    <div>
+                        <p>价格￥{{info.retail_price}}</p>
+                        <p>请选择数量</p>
+                    </div>
+                </div>
+                <div class="close" @click="showType">x</div>
+            </div>
+            <div class="bottom">
+                <p>数量</p>
+                <!-- 加减的输入框 -->
+                <div class="count">
+                    <div class="cut" @click="reduce">-</div>
+                    <!-- v-model="number": 双向绑定数据源
+                         disabled="false"：不可以手动修改，只能通过加减改变数量
+                     -->
+                    <input type="text" class="number" v-model="number" disabled="false">
+                    <div class="add" @click="add">+</div>
+                </div>
+            </div>
+        </div>
 
+        <!-- 商品参数 -->
+        <div class="attribute">
+            <div class="head">
+                商品参数
+            </div>
+            <div class="item" v-for="(item, index) in attribute" :key="index">
+                <div>{{item.name}}</div>
+                <div>{{item.value}}</div>
+            </div>
+        </div>
+
+        <!-- 商品图片展示 -->
+        <div class="detail" v-if="goods_desc">
+          <!-- 放上一个微信自带的标签，做图片预览功能-->
+          <!-- 需要放上一个content参数（渲染内容），里面放的内容是需要展示的数据内容 -->
+          <!-- 当前这个wxParser这个标签我们是没有的，要做一个额外的处理,要引入 他不是小程序自带的是mpvue中带的-->
+          <wxParse :content="goods_desc" ></wxParse>
+        </div>
     </div>
 </template>
 <script>
 import {get,post} from '../../utils'
+// 先安装插件，再引入。npm install --save mpvue-wxparse
+//引入一个插件叫mpvue-wxparse,适用于mpvue的微信小程序富文本解析组件
+import wxParse from 'mpvue-wxparse' 
+
 export default{
     data() {
         return{
@@ -64,8 +123,14 @@ export default{
             openId:'',
             info: {},  // 对象
             brand: {},
-            showpop: false
+            showpop: false,
+            number: 0,  // 默认数量为0
+            attribute: [],  // 商品的规格参数
+            goods_desc: '',  // 用于商品细节展示的数据内容（图片）
         }
+    },
+    components: {
+        wxParse  //声明组件
     },
     // 商品分享配置标题和内容；小程序自带方法onShareAppMessage()
     onShareAppMessage() {
@@ -103,10 +168,25 @@ export default{
             this.info = data.info
             // 把从后端获取到的商品图片放到vue的数据源data中
             this.gallery = data.gallery
+            // 将从后端获取到的商品规格参数放到vue的数据源data中
+            this.attribute = data.attribute
+            // 将从后端获取到的商品细节描述（图片）放到vue的数据源data中
+            this.goods_desc = data.info.goods_desc
         },
         showType() {
             // 点击一下出现，再点击一下消失
             this.showpop = !this.showpop
+        },
+        add() {
+            this.number += 1
+        },
+        reduce() {
+            // 数量减到1时，不需要继续减，返回false
+            if(this.number > 1) {
+                this.number -= 1
+            } else {
+                return false
+            }
         }
     }
 }
@@ -114,4 +194,5 @@ export default{
 
 <style lang='less' scoped>
 @import './style';
+@import url('~mpvue-wxparse/src/wxParse.css');
 </style>
