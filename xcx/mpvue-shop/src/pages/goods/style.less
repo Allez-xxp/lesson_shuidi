@@ -217,4 +217,177 @@
             }
         }
     }
+    .common-problem{
+        margin-bottom: 11rpx;
+        .head{
+            padding: 35rpx 0;
+            background: #fff;
+            text-align: center;
+            display: flex;
+            align-items: center; //y轴居中
+            justify-content: center; //x轴居中
+            .title{
+                padding: 0 25rpx;
+                background: #fff;
+            }
+        }
+        .bottom{
+            padding: 0 30rpx;
+            background: #fff;
+            .item{
+                padding-bottom: 25rpx;
+                .question-box{
+                    display: flex;  // 弹性布局
+                    .spot{
+                        width: 8rpx;
+                        height: 8rpx;
+                        background: #b4282d;
+                        border-radius: 50%;  // 圆角，给50%变成圆
+                        margin-top: 11rpx;
+                    }
+                    .question{
+                        line-height: 30rpx; //行高
+                        padding-left: 8rpx; //离点有隔开一点距离
+                        display: block;  //因为在最外层给了弹性布局，所以不怕不会和圆点在一行
+                        font-size: 26rpx;
+                        padding-bottom: 15rpx;
+                        color: #303030;
+                    }
+                }
+                .answer{
+                    line-height: 40rpx;
+                    padding-left: 16rpx;
+                    font-style: 26rpx;
+                    color: #787878;
+                }
+            }
+        }
+        .sublist{
+            display: flex;
+            flex-wrap: wrap; //必要时换行
+            // 间隙设置为10rpx(大盒子宽度730rpx,包含的两个盒子宽度都是360rpx。所以两盒子之间间隙10rpx)
+            justify-content: space-between;  
+            width: 730rpx;
+            margin: 0 auto;
+            div{
+                width: 360rpx;
+                background: #fff;
+                margin-bottom: 10rpx;
+                padding-bottom: 10rpx;
+                img{
+                    display: block;
+                    width: 302rpx;
+                    height: 302rpx;
+                    margin: 0 auto; //左右居中
+                }
+                p{
+                    margin-bottom: 5rpx;
+                    text-indent: 1em; //首行缩进
+                }
+                p:nth-child(2){
+                    // 超出则打点
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    width: 98%;
+                }
+                p:nth-child(3){ //第三个p标签，是我们的价格
+                    //规定属于其父元素的第3个子元素的每个 p 的背景色：
+                    color: #9c3232;
+                }
+            }
+        }
+    }
+    .bottom-fixed{
+        position: fixed;//要定位到屏幕的底部//相对于整个视图定位
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 750rpx;//其实就是手机屏幕的宽度
+        display: flex;//弹性布局 因为要让里面的元素他们在同一行
+        background: #fff;
+        z-index: 10; 
+        // 收藏图标
+        .collect-box{
+            height: 100rpx;//也就是高度100%
+            width: 162rpx;
+            border: 1rpx solid #f4f4f4;
+            display: flex;//弹性布局
+            align-items: center;//垂直居中
+            justify-content: center;//居中对齐弹性盒的各项 <div> 元素：
+            .collect{
+                display: block;//定义为块级元素,好设宽高
+                height: 44rpx;
+                width: 44rpx;
+                background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588137057894&di=5de23e4c6f6cc77a9fae2a984517b78c&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F35%2F52%2F65573be8b208922.jpg') no-repeat;
+                background-size: 100%;
+                // 然后点击的时候会标红怎么做？就是替换了图片
+            }
+            .collect.active{ //如果既有collect 又有active类名,就替换之前图片
+                display: block;//定义为块级元素,好设宽高
+                height: 44rpx;
+                width: 44rpx;
+                background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590124443971&di=0ba5fd99a1535c7ef649d7ab0cd90d0e&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F01%2F23%2F4456f3e79e79486.jpg') no-repeat;
+                background-size: 100%;
+                
+            }
+        }
+        //购物车图标
+        .car-box{  
+            height: 100rpx;//也就是高度100%
+            width: 162rpx;
+            border: 1rpx solid #f4f4f4;
+            display: flex;//弹性布局
+            align-items: center;//垂直居中
+            justify-content: center;//居中对齐弹性盒的各项 <div> 元素：
+            .car{
+                position: relative;//相对定位//因为有一个角标需要根据这个定位
+                width: 60rpx;
+                height: 60rpx;
+                span{ //角标
+                    position: absolute;//绝对定位，
+                    top: 0;
+                    right: 0;//右上角
+                    width: 28rpx;
+                    height: 28rpx;
+                    z-index: 10;
+                    background: #b4282d;
+                    text-align: center;//文字居中
+                    font-size: 18rpx;
+                    color: #fff;
+                    line-height: 28rpx;//行高跟高度一样//line-height = 上间距+文字高+下间距
+                    border-radius: 50%;
+                }
+                img{
+                    display: block;
+                    height: 44rpx;
+                    width: 44rpx;
+                    position: absolute;
+                    top: 10rpx;
+                    left: 0;
+                }
+            }
+        }
+        //立即购买
+        div:nth-child(3){ 
+            height: 100rpx;
+            line-height: 96rpx; //上间距+文字高+下间距
+            text-align: center;
+            flex: 1;   //继承父容器的
+            color: #333;
+            border-top: 1rpx solid #f4f4f4;
+            border-bottom: 1rpx solid #f4f4f4;
+        }
+        //加入购物车
+        div:nth-child(4){ 
+            height: 100rpx;
+            line-height: 96rpx; //上间距+文字高+下间距
+            text-align: center;
+            flex: 1; //继承父容器的
+            color: #fff;
+            background: #b4282d;
+            border: 1rpx solid #bd282d;
+            float: left;//向左浮动
+        }
+    }
 }

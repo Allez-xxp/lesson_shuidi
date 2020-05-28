@@ -30,11 +30,23 @@ async function detailAction(ctx) {
         // 并且还会关联去取nideshop_attribute表中的attribute_id跟nideshop_goods_attribute.attribute_id相同的数据。
         'nideshop_goods_attribute.goods_id': goodsId
     }).select()
+
+    // 4. 获取常见问题
+    const issue = await mysql('nideshop_goods_issue').select()
+
+    // 5. 获取大家都在看
+    const productList = await mysql('nideshop_goods').where({
+        // categroy_id: 表示相同类型的商品
+        'category_id': info[0].category_id    
+    }).select()
+
     // 向前端页面输出
     ctx.body = {
         'info':info[0] || [],  
         'gallery':gallery,
-        'attribute': attribute
+        'attribute': attribute,
+        'issue':issue,
+        'productList': productList
     }
 }
 

@@ -107,6 +107,60 @@
           <!-- 当前这个wxParser这个标签我们是没有的，要做一个额外的处理,要引入 他不是小程序自带的是mpvue中带的-->
           <wxParse :content="goods_desc" ></wxParse>
         </div>
+
+        <!-- 常见问题 -->
+        <div class="common-problem">
+          <div class="head">
+              <!-- 用一个小程序里的标签text -->
+              <text class="title">常见问题</text>
+          </div>
+          <!-- 然后问题和答案作为一个模块,有4组，用一个for循环 -->
+          <div class="bottom">
+              <div class="item" v-for="(item,index) in issueList" :key="index">
+                  <div class="question-box">
+                      <!-- 首先前面有一个点，然后后面是问题 -->
+                      <text class="spot"></text>
+                      <text class="question">{{item.question}}</text>
+                  </div>
+                  <div class="answer">{{item.answer}}</div>
+              </div>
+          </div>
+      </div>
+
+      <!-- 大家都在看 -->
+      <div class="common-problem">
+          <div class="head">
+              <!-- 用一个小程序里的标签text -->
+              <text class="title">大家都在看</text>
+          </div>
+          <!-- 然后问题和答案作为一个模块,有4组，用一个for循环 -->
+          <div class="sublist">
+              <div v-for="(subitem, index) in productList" :key="index">
+                  <img :src="subitem.list_pic_url" alt="">
+                  <p>{{subitem.name}}</p>
+                  <p>￥{{subitem.retail_price}}</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- 底部栏footbar(收藏，购物车，立即购买，加入购物车（标红）) -->
+      <div class="bottom-fixed">
+          <!-- 点击后，collect能再加上一个类名 -->
+          <div class="collect-box" @click="collect">
+              <!-- 收藏 -->
+              <div class="collect" :class="[collectFlag ? 'active': '']"></div>
+          </div>
+          <div class="car-box" @click="toCart">
+              <!-- 购物车 -->
+              <div class="car" >
+                  <!-- 角标，就是有几件商品在购物车 -->
+                  <span>3</span>
+                  <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588136330960&di=e8c24af3df84caa2d5e3e87bbd9a4857&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F03%2F21%2F07%2F5b6aec225946c_610.jpg" alt="">
+              </div>
+          </div>
+          <div @click="buy">立即购买</div>
+          <div @click="addCart">加入购物车</div>
+      </div>
     </div>
 </template>
 <script>
@@ -127,6 +181,8 @@ export default{
             number: 0,  // 默认数量为0
             attribute: [],  // 商品的规格参数
             goods_desc: '',  // 用于商品细节展示的数据内容（图片）
+            issueList: [],  // 存放常见问题
+            productList:[]  // 存放大家都在看内容
         }
     },
     components: {
@@ -172,6 +228,9 @@ export default{
             this.attribute = data.attribute
             // 将从后端获取到的商品细节描述（图片）放到vue的数据源data中
             this.goods_desc = data.info.goods_desc
+            // 将从后端获取到常见问题的数据放到vue的数据源data中
+            this.issueList = data.issue
+            this.productList = data.productList
         },
         showType() {
             // 点击一下出现，再点击一下消失
