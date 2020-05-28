@@ -133,7 +133,7 @@
               <!-- 用一个小程序里的标签text -->
               <text class="title">大家都在看</text>
           </div>
-          <!-- 然后问题和答案作为一个模块,有4组，用一个for循环 -->
+          <!-- 然后图片名字，价格作为一个模块,用一个for循环输出-->
           <div class="sublist">
               <div v-for="(subitem, index) in productList" :key="index">
                   <img :src="subitem.list_pic_url" alt="">
@@ -147,14 +147,17 @@
       <div class="bottom-fixed">
           <!-- 点击后，collect能再加上一个类名 -->
           <div class="collect-box" @click="collect">
-              <!-- 收藏 -->
+              <!-- 收藏（点击时标红即替换图片）
+                当类名有collect和active时，即被点击替换图片；没有active即不替换图片
+                :class="[collectFlag ? 'active': '']"： 添加动态类名
+              -->
               <div class="collect" :class="[collectFlag ? 'active': '']"></div>
           </div>
           <div class="car-box" @click="toCart">
               <!-- 购物车 -->
               <div class="car" >
                   <!-- 角标，就是有几件商品在购物车 -->
-                  <span>3</span>
+                  <span>{{allnumber}}</span>
                   <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588136330960&di=e8c24af3df84caa2d5e3e87bbd9a4857&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F03%2F21%2F07%2F5b6aec225946c_610.jpg" alt="">
               </div>
           </div>
@@ -182,7 +185,11 @@ export default{
             attribute: [],  // 商品的规格参数
             goods_desc: '',  // 用于商品细节展示的数据内容（图片）
             issueList: [],  // 存放常见问题
-            productList:[]  // 存放大家都在看内容
+            productList:[],  // 存放大家都在看内容
+            collectFlag:false, // 收藏标志
+            goodsId:'',   // 商品id
+            allnumber: 0,  //购物车当中的数据
+            allPrice:''   // 当前商品的总价格
         }
     },
     components: {
@@ -213,7 +220,7 @@ export default{
         this.goodsDetail()
     },
     methods:{
-        // 用于获取详情页的数据的请求接口
+        // 用于请求获取详情页的数据的接口
         async goodsDetail() {
             const data = await get('/goods/detailaction',{
                 id: 1009024,
@@ -231,6 +238,10 @@ export default{
             // 将从后端获取到常见问题的数据放到vue的数据源data中
             this.issueList = data.issue
             this.productList = data.productList
+            this.goodsId = data.info.id
+            this.collectFlag = data.collected
+            this.allnumber = data.allnumber
+            this.allPrice = data.info.retail_price
         },
         showType() {
             // 点击一下出现，再点击一下消失
@@ -246,6 +257,52 @@ export default{
             } else {
                 return false
             }
+        },
+        // 用于请求获取收藏相关数据的接口
+        async collect() {
+            // 点击一下收藏，再点击一下取消收藏
+            this.collectFlag = !this.collectFlag
+            const data = await post('/collect/addcollect', {
+                openId: this.openId,
+                goodsId: this.goodsId
+            })
+            console.log(data)
+        },
+        // 点击购物车，跳转去购物车详情页面
+        toCart() {
+            wx.switchTab({ 
+                url: '/pages/cart/main' 
+            });
+        },
+        async buy() {
+            if(this.showpop) {
+                if(this.number === 0) {
+                    wx.showToast({
+                      title: '请选择商品数量', //提示的内容,
+                      icon: 'none', //图标,
+                      duration: 2000, //延迟时间,
+                      mask: true, //显示透明蒙层，防止触摸穿透,
+                      success: res => {}
+                    })
+                    return false
+                }
+                const data = await post('/order/submitAction',{
+                    goodsId: this.goodsId,
+                    openId: this.openId,
+                    allPrice: this.allPrice
+                })
+                // console.log(data)
+                if(data) {  //如果订单数据存在，就跳转去支付页面
+                    wx.navigateTo({ 
+                        url: '/pages/order/main' 
+                    });
+                }
+            } else {
+                this.showpop = true
+            }
+        },
+        addCart() {
+            
         }
     }
 }

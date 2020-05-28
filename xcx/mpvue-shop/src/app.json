@@ -11,7 +11,8 @@
     "pages/brandList/main",
     "pages/newgoods/main",
     "pages/topicdetail/main",
-    "pages/search/main"
+    "pages/search/main",
+    "pages/order/main"
     
   ],
   "permission": {
