@@ -180,7 +180,7 @@ export default{
             openId:'',
             info: {},  // 对象
             brand: {},
-            showpop: false,
+            showpop: false,  // 弹出层
             number: 0,  // 默认数量为0
             attribute: [],  // 商品的规格参数
             goods_desc: '',  // 用于商品细节展示的数据内容（图片）
@@ -217,13 +217,17 @@ export default{
     },
     mounted() {
         this.openId = wx.getStorageSync('openId') || '';
+        // this.id = this.$root.query.id;// 但是这样拿不到，
+        this.id = this.$root.$mp.query.id // mpvue那参数的方式，
         this.goodsDetail()
     },
     methods:{
         // 用于请求获取详情页的数据的接口
         async goodsDetail() {
             const data = await get('/goods/detailaction',{
-                id: 1009024,
+                // 要请求当前沙发的详细信息，就要传给后端id(可以唯一标识这个商品),在数据源中放上一个id
+                // id的值，应该是从上一个页面接受过来的,//更换成上一个页面跳转的时候传过来的id
+                id: this.id,  
                 openId: this.openId  //用于区分用户身份信息
             })
             console.log(data)
@@ -274,6 +278,10 @@ export default{
                 url: '/pages/cart/main' 
             });
         },
+        // 获取立即购买相关数据，请求接口
+        // 第一次点击，弹出商品数量选择框
+        // 若没有添加数量，第二次点击，会弹出提示框"请选择商品数量"
+        // 在选择完商品数量时，第三次点击，会直接跳转到订单页面
         async buy() {
             if(this.showpop) {
                 if(this.number === 0) {
@@ -301,8 +309,42 @@ export default{
                 this.showpop = true
             }
         },
-        addCart() {
-            
+        // 获取点击添加购物车相关数据，请求接口
+        async addCart() {
+            if(this.showpop) {
+                
+                // 判断是否添加商品数量
+                if(this.number === 0) {
+                    wx.showToast({
+                      title: '请选择商品数量', //提示的内容,
+                      icon: 'none', //图标,
+                      duration: 2000, //延迟时间,
+                      mask: true, //显示透明蒙层，防止触摸穿透,
+                      success: res => {}
+                    })
+                    return false
+                }
+                const data = await post('/cart/addCart',{
+                    openId: this.openId,    // 哪位用户
+                    goodsId: this.goodsId,  // 添加哪件商品
+                    number: this.number     // 在加入购物车中选择加入多少件商品
+                })
+                // console.log(data)
+                // 判断商品是否存在，若存在
+                if(data) {
+                    // 为了让页面上的数据能实时更新，直接这样加，就不去页面做请求了，是纯粹的前端更新
+                    // allnumber表示的是购物车里的商品数量
+                    // 将它设置为已有商品数量+新加商品数量的总和
+                    this.allnumber = this.allnumber + this.number
+                    wx.showToast({
+                        title:'添加购物车成功',
+                        icon:'success',
+                        duration:1500  //延迟时间
+                    })
+                }
+            } else {
+                this.showpop = true
+            }
         }
     }
 }
