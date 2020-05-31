@@ -61,6 +61,16 @@ export function post(url,data) {
   return request(url,'POST', data)  //调用request方法
 }
 
+// 定义方法, 用于获取用户id
+export function getStorageOpenId() {
+  const openId = wx.getStorageSync('openId')
+  if(openId) {
+    return openId
+  } else {
+    return ''
+  }
+}
+
 export default {
   formatNumber,
   formatTime
