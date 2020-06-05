@@ -16,7 +16,8 @@
               <span>{{item.name}}</span>
               <div class="moren" v-if="item.is_default ===1">默认</div>
             </div>
-            <div class="info">
+            <!-- 点击中间，跳去上一个页面，并且把所选中的地址带回上一个页面 -->
+            <div class="info" @click="selectAddress(item.id)">
               <p>{{item.moblie}}</p>
               <p>{{item.address+item.address_detail}}</p>
             </div>
@@ -34,6 +35,7 @@
     
     <!-- 底部栏：两个盒子并列 -->
     <div class="bottom">
+      <!-- 绑定同一个方法，怎么区分它是新建还是一键导入？上面那个传个实参 -->
       <div @click="wxaddress(1)">+新建地址</div>
       <div @click="wxaddress">一键导入微信地址</div>
     </div>  
@@ -57,25 +59,30 @@ export default{
     // 点击修改图标，跳转到信息修改页面；但是要将已经显示的数据也显示到修改页面，所以传实参id
     toDetail(id) {
       wx.navigateTo({ 
-          url: "/pages/addAddress/main?id" + id
+          url: '/pages/addAddress/main?id=' + id
         });
     },
-    wxaddress(index) {  //接受一个形参
-      // 判断形参是否为1，如果为1，则是跳转到新建地址页面
+    // 判断参数index,有值就是新建，没有就是一键导入
+    wxaddress(index) {
       if(index === 1) {
-        wx.navigateTo({ 
-          url: "/pages/addAddress/main"
-        }); 
-      } else {  // 否则，一键导入微信地址，跳转到第三方页面（微信小程序自带方法）
-        wx.chooseAddress({
-          success: function(res) {
-            let result = encodeURIComponent(JSON.stringify(res));
-            // console.log(result);
+        wx.navigateTo({
+          url: '/pages/addAddress/main' //之前创建过这个页面
+        })
+      } else {
+          // 获取微信信息的方法，小程序中有一个api
+          wx.chooseAddress({
+            // Es5的方法，回调函数中的回调参数，去编码一下
+            success: function(res) {
+            // console.log(res) //??只有张三？
+            // 重新编码一下
+            let result = encodeURIComponent(JSON.stringify(res)); //因为数据格式的问题，需要格式化一下
+            console.log(result);
+            // 还是要跳转，要跳去编辑地址页面，然后确认保存后这条数据才会被保存到数据库中去
             wx.navigateTo({
-               url: "/pages/addAddress/main?res=" + result
-            });
+              url: '/pages/addAddress/main?res=' + result //把拿到的地址带过去
+            })
           }
-        });
+        })
       }
     },
     // 向后端进行接口请求，获取地址列表信息
@@ -88,8 +95,18 @@ export default{
       console.log(data)
       // 将从后端拿到的数据放入数据源中
       _this.listData = data.data
+    }, 
+    // 跳去上一个页面，并且把所选中的地址带回上一个页面(支付页面)
+    selectAddress(id) {
+      //将当前这条地址信息的id存到本地（上一个页面order中有一个get)
+      // 从这里条回去的时候order页面，就一定能获取到当前address的id
+      wx.setStorageSync('addressId', id) 
+      
+      wx.navigateBack({
+        dalta: 1 //返回一层
+      })
     }
-  },
+  }
   
   
 }
