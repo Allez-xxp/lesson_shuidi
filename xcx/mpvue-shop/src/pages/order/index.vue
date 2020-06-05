@@ -67,7 +67,7 @@
         <!-- 底部栏 总价 -->
         <div class="bottom">
             <div>实付：￥ {{allprice}}</div>
-            <div class="pay">支付</div>   
+            <div class="pay" @click="pay">支付</div>   
         </div>
   </div>
         
@@ -124,6 +124,16 @@ export default {
                 this.allprice += item.retail_price*item.number
             })
         
+        },
+        // 点击支付，弹出支付功能尚未开发框
+        pay() {
+            wx.showToast({
+              title: '支付内容暂未开发', //提示的内容,
+              icon: 'none', //图标, 若为success,图标为√
+              duration: 1500, //延迟时间,
+              mask: false, //显示透明蒙层，防止触摸穿透,
+              success: res => {}
+            });
         }
     }
 }
