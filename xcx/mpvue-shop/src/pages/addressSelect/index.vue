@@ -73,16 +73,16 @@ export default{
           wx.chooseAddress({
             // Es5的方法，回调函数中的回调参数，去编码一下
             success: function(res) {
-            // console.log(res) //??只有张三？
-            // 重新编码一下
-            let result = encodeURIComponent(JSON.stringify(res)); //因为数据格式的问题，需要格式化一下
-            console.log(result);
-            // 还是要跳转，要跳去编辑地址页面，然后确认保存后这条数据才会被保存到数据库中去
-            wx.navigateTo({
-              url: '/pages/addAddress/main?res=' + result //把拿到的地址带过去
-            })
-          }
-        })
+              // console.log(res) //??只有张三？
+              // 重新编码一下
+              let result = encodeURIComponent(JSON.stringify(res)); //因为数据格式的问题，需要格式化一下
+              console.log(result);
+              // 还是要跳转，要跳去编辑地址页面，然后确认保存后这条数据才会被保存到数据库中去
+              wx.navigateTo({
+                url: '/pages/addAddress/main?res=' + result //把拿到的地址带过去
+              })
+            }
+          })
       }
     },
     // 向后端进行接口请求，获取地址列表信息

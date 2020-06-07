@@ -1,7 +1,7 @@
 const { mysql } = require('../../mysql');
 
 // 接口的定义
-// 获取收货地址列表
+// 获取收货地址列表方法 getListAction
 async function getListAction(ctx) {
     const openId = ctx.query.openId
     const addressList = await mysql('nideshop_address').where({
@@ -13,7 +13,7 @@ async function getListAction(ctx) {
     }
 }
 
-// 获取详细地址
+// 获取详细地址方法 detailAction
 async function detailAction(ctx) {
     const id = ctx.query.id
     const detailData = await mysql('nideshop_address').where({
@@ -25,18 +25,18 @@ async function detailAction(ctx) {
         data: detailData[0]  //这里拿到的是个数组但是一个id只对应一个数据，所以加上一个[0]
     }
 }
-//保存地址 添加或更新收货地址
+//保存地址 添加或更新收货地址方法
 async function saveAction(ctx) {
     const addressId = ctx.request.body.addressId; //前端传过来的
     const { userName, telNumber, address, detailaddress, checked, openId } = ctx.request.body;
-    // 如果是默认选中，先在数据库中查询是否是默认地址，因为默认地址只能有一条，
+    // 判断：如果是默认选中，先在数据库中查询是否是默认地址，因为默认地址只能有一条，
     if(checked) {
         const isDefault = await mysql('nideshop_address').where({
             'user_id': openId, //是否是我们正在操作保存按钮的那个用户的id
             'is_default': 1 //找到当前是数据库中默认地址为1的那条数据
         }).select()
         if(isDefault.length > 0) {
-            // 能找到,就说明这张表中已经存在了一条默认地址了，
+            // 返回格式为数组形式；如果能找到,就说明这张表中已经存在了一条默认地址了，
             await mysql('nideshop_address').where({
                 'user_id': openId, //是否是我们正在操作保存按钮的那个用户的id
                 'is_default': 1 //找到当前是数据库中默认地址为1的那条数据
@@ -69,7 +69,7 @@ async function saveAction(ctx) {
     } else {
         // 点击编辑进来的话，是更新地址
         const data = await mysql('nideshop_address').where({
-            'id': addressId  //有addressId 跟新这个地址
+            'id': addressId  //有addressId 更新这个地址
           }).update({
             name: userName,
             mobile: telNumber,
@@ -90,6 +90,8 @@ async function saveAction(ctx) {
     }
     // 勾选了checked，但是保存到数据库的时候is_Default是false 去前端看一下
 }
+
+
 
 //抛出这个方法，route那里才能拿得到
 module.exports = {

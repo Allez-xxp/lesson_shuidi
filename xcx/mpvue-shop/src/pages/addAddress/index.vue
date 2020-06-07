@@ -31,6 +31,7 @@
                   <checkbox class="box" value="true" :checked="checked" color="#b4282d">设置为默认地址</checkbox>
               </label>
           </checkbox-group>
+          <!-- 一键导入微信 -->
           <div @click="wxaddress">一键导入微信</div>
           
       </div>
@@ -89,6 +90,7 @@ export default {
             // 改一下数据源中的值
             this.checked = e.mp.detail.value[0]
         },
+        // 微信一键导入地址
         wxaddress() {
             // 调用小程序的api
             wx.chooseAddress({
@@ -108,7 +110,7 @@ export default {
             this.address = `${value[0]} ${value[1]} ${value[2]}`
             // 我们在组件中绑定了v-model="address" 先在页面上也能显示出来
         },
-        //保存  
+        //保存新增或修改的收货地址信息，接口请求  
         async saveAddress() {
             // 把页面上新增的字段传给后端
             const data = await post('/address/saveAction',{
@@ -122,8 +124,8 @@ export default {
                 // 还是需要传一个id
                 addressId: this.id
             })
-            // console.log(data);
-            // 插入或者修改成功，我们自己返回了一个data:true
+            console.log(data); // 插入或者修改成功，我们自己返回了一个data:true
+            
             if(data) {
                 // 弹出一个提示
                 wx.showToast({
@@ -134,12 +136,12 @@ export default {
                     success: (result) => {
                         // 成功就返回上一个页面
                         // 有一个问题 遮罩层是两秒了，但是toast提示 没有
+                        //因为不能控制回调函数也能在2秒后再执行，需要手动控制一下：定时器
                         setTimeout(()=> {
                             wx.navigateBack({
                                 delta: 1
                             })
-                        },2000)
-                        //因为不能控制回调函数也能在2秒后再执行，需要手动控制一下
+                        },2000)                        
                     }
                 })
             }

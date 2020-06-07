@@ -54,16 +54,19 @@ router.post('/collect/addcollect',controllers.collect.index.addCollect)
 // 订单相关的接口
 // 1.立即购买的订单数据操作方法
 router.post('/order/submitAction',controllers.order.index.submitAction)
-// 2.
+// 2.获取收货地址相关信息方法
 router.get('/order/detailAction',controllers.order.index.detailAction)
 
 // 购物车相关接口
 router.post('/cart/addCart',controllers.cart.index.addCart)
 
 // 收货地址相关的接口
+// 1. 获取收货地址列表方法
 router.get('/address/getListAction',controllers.address.index.getListAction)
+// 2. 获取详细地址方法
 router.get('/address/detailAction',controllers.address.index.detailAction)
-
+// 3. 添加或更新收货地址方法
+router.post('/address/saveAction',controllers.address.index.saveAction)
 
 //把router导入出去,app.js的router的引入才有用 
 module.exports = router
