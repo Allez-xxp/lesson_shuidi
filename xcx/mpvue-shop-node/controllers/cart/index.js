@@ -44,6 +44,17 @@ async function addCart(ctx) {
     }
 }
 
+// 定义获取购物车列表数据方法
+async function cartList(ctx) {
+    const {openId} = ctx.query
+    const cartList = await mysql('nideshop_cart').where({
+        'user_id': openId
+    }).select()
+    ctx.body = {
+        data: cartList
+    }
+}
 module.exports = {
-    addCart
+    addCart,
+    cartList
 }
