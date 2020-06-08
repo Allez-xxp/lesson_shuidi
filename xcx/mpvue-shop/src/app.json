@@ -15,7 +15,8 @@
     "pages/goods/main",
     "pages/order/main",
     "pages/addressSelect/main",
-    "pages/addAddress/main"
+    "pages/addAddress/main",
+    "pages/categorylist/main"
     
     
   ],

@@ -10,8 +10,9 @@
         <span class="icon"></span>
       </div>
     </div>
+    <!-- swiper用于轮播图-->
     <div class="swiper">
-      <!--swiper用于轮播图；indicator-dots：用于是否展示轮播图上的点 
+      <!--indicator-dots：用于是否展示轮播图上的点 
           autoplay: 是否自动轮播；interval：轮播时间；
           circular：循环不间断轮播；duration: 轮播图之间的切换时间
       -->
@@ -31,10 +32,11 @@
         </block>
       </swiper>
     </div >
+    <!-- 轮播图下的table（居家，服饰等） -->
     <div class="channel">
       <div v-for="(item, index) in channel" 
       :key="index"
-       @click="categroyList(item.id)">
+       @click="categoryList(item.id)">
         <img :src="item.icon_url" alt="">
         <p>{{item.name}}</p>
       </div>
@@ -240,9 +242,9 @@ export default {
         url: '/pages/search/main' 
       });
     },
-    categroyList(id) {
+    categoryList(id) {
       wx.navigateTo({ //小程序：跳转下一个页面：navigateTo()
-         url: '/pages/categroyList/main?id=' + id  // 跳转路径绑定传递id
+         url: '/pages/categorylist/main?id=' + id  // 跳转路径绑定传递id
       });
     },
     branddetail(id) {
