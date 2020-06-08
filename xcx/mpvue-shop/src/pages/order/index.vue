@@ -115,13 +115,14 @@ export default {
             })
             // console.log(data)
             if(data) {
-            // this.allprice = data.price //还要更改
+            // this.allprice = data.price 
             this.listData = data.goodsList
             this.address = data.address
             }
             // 计算合计
             this.listData.map((item) => {
-                this.allprice += item.retail_price*item.number
+                
+                this.allprice = Number(item.retail_price*item.number) + Number(this.allprice)
             })
         
         },

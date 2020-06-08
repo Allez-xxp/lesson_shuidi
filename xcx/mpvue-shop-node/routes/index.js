@@ -57,6 +57,7 @@ router.post('/order/submitAction',controllers.order.index.submitAction)
 // 2.获取收货地址相关信息方法
 router.get('/order/detailAction',controllers.order.index.detailAction)
 
+
 // 购物车相关接口
 // 1. 添加购物车方法
 router.post('/cart/addCart',controllers.cart.index.addCart)

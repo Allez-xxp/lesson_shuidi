@@ -121,10 +121,40 @@ export default {
             // 用一个计算属性
         },
         // 点击下单
-        orderDown() {
+        async orderDown() {
             // 1. 用户没有选择商品时，点击下单，要弹出提示框：提示用户选择商品
             // 2. 成功下单的商品要移出购物车
-            
+            if(this.Listids.length === 0) {
+                wx.showToast({
+                  title: '请选择商品', //提示的内容,
+                  icon: 'none', //图标,
+                  duration: 2000, //延迟时间,
+                  mask: true, //显示透明蒙层，防止触摸穿透,
+                  success: res => {}
+                })
+                return false
+            }
+            // 去除数组中空的false
+            let newgoodsid = []  // newgoodsid存储的才是真正要下单的商品
+            for(let i = 0; i<this.Listids.length; i++) {
+                const element = this.Listids[i]
+                if(element) {
+                    newgoodsid.push(element)
+                }
+            }
+            // 拼接为数组格式，元素以逗号隔开
+            let goodsId = newgoodsid.join(',')
+            const data = await post('/order/submitAction',{
+                goodsId: goodsId,
+                openId: this.openId,
+                allPrice: this.allPrice
+            })
+            console.log(data)
+            if(data) {
+                wx.navigateTo({ 
+                    url: '/pages/order/main' 
+                });
+            }
         }
     },
     // 计算属性，里面的方法都要有return
