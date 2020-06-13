@@ -33,6 +33,10 @@ router.get('/topic/detailAction',controllers.topic.index.detailAction)
 // 分类相关接口
 // 1. 获取分类列表商品数据（导航栏）方法
 router.get('/category/categoryNav',controllers.category.index.categoryNav)
+// 2. 获取分类页面的菜单列表数据
+router.get('/category/indexAction',controllers.category.index.indexAction)
+// 3. 点击左侧菜单获取的分类商品数据（右侧）方法
+router.get('/category/currentAction',controllers.category.index.currentAction)
 
 // 搜索相关的接口
 // 2. 热门搜索接口，去定义controllers/search/index.js indexaction方法

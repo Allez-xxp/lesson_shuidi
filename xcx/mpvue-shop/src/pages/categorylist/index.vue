@@ -17,7 +17,7 @@
         </div>
         <!-- 商品列表，显示商品 -->
         <div class="list" v-if="goodsList.length !== 0">
-            <div class="item" v-for="(item, index) in goodsList" :key="index" @click="goodsDeatil">
+            <div class="item" v-for="(item, index) in goodsList" :key="index" @click="goodsDetail">
                 <img :src="item.list_pic_url" alt="">
                 <p class="name">{{item.name}}</p>
                 <p class="price">{{item.retail_price}}</p>
