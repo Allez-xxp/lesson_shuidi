@@ -24,6 +24,12 @@ const controllers = require('../controllers/index') //只引入到controllers，
 // 为了将项目更加地模块化通常会将(ctx,next)那个箭头函数写成一个控制层（专门用来写具体要干嘛的）。去controller(建home->index,js)
 router.get('/index/index',controllers.home.index) //此刻原来的箭头函数就被controller层替代了
 
+// 专题相关接口
+// 1. 获取专题列表数据方法
+router.get('/topic/listAction',controllers.topic.index.listAction)
+// 2. 获取专题商品详情数据方法
+router.get('/topic/detailAction',controllers.topic.index.detailAction)
+
 // 分类相关接口
 // 1. 获取分类列表商品数据（导航栏）方法
 router.get('/category/categoryNav',controllers.category.index.categoryNav)
