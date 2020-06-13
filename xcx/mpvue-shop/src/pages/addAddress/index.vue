@@ -1,4 +1,5 @@
 <template>
+  <!-- 添加地址页面 -->
   <div class="addaddress">
       <!-- 输入姓名 -->
       <div class="item">
