@@ -1,4 +1,5 @@
 <template>
+    <!-- 专题页面 -->
     <div class="topic">
         <ul class="list">
             <li v-for="(item, index) in topicList" :key="index" @click="topicDetail(item.id)">

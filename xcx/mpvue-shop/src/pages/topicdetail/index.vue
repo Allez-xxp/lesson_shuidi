@@ -1,4 +1,5 @@
 <template>
+    <!-- 专题详情页面 -->
     <div class="topicDetail">
         <div class="content">
             <div class="detail" v-if="goods_desc">
