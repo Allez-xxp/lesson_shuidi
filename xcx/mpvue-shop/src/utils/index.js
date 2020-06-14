@@ -70,8 +70,29 @@ export function getStorageOpenId() {
     return ''
   }
 }
+// 定义方法，用于判断用户是否登录
+export function login() {
+  const userInfo = wx.getStorageSync('userInfo')
+  if(userInfo) {
+    return userInfo
+  }
+}
+// 定义方法，用于判断用户是否登录，没有就跳转到登录页面
+export function toLogin() {
+  const userInfo = wx.getStorageSync('userInfo')
+  if(!userInfo) {
+    wx.navigateTo({ 
+      url: '/pages/login/main' 
+    });
+  } else {
+    return true
+  }
+}
 
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  getStorageOpenId,
+  login,
+  toLogin
 }
