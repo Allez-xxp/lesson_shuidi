@@ -61,7 +61,7 @@ router.get('/search/helperaction',controllers.search.index.helperAction)
 
 // 商品相关接口
 // 1. 商品详情
-router.get('/goods/detailaction',controllers.goods.index.detailAction)
+router.get('/goods/detailAction',controllers.goods.index.detailAction)
 // 2. 商品列表
 router.get('/goods/goodsList',controllers.goods.index.goodsList)
 

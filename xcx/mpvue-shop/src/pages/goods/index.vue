@@ -224,7 +224,7 @@ export default{
     methods:{
         // 用于请求获取详情页的数据的接口
         async goodsDetail() {
-            const data = await get('/goods/detailaction',{
+            const data = await get('/goods/detailAction',{
                 // 要请求当前沙发的详细信息，就要传给后端id(可以唯一标识这个商品),在数据源中放上一个id
                 // id的值，应该是从上一个页面接受过来的,//更换成上一个页面跳转的时候传过来的id
                 id: this.id,  
