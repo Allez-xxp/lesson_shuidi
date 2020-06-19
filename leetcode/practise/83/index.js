@@ -1,4 +1,3 @@
-// 删除排序链表中的重复元素
 var deleteDuplicates = function(head) {
     var cur = head;
     while(cur && cur.next) {
